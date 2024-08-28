@@ -30,6 +30,7 @@ const AdminProductManagement: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
   const { token } = useAuth();
   const { setError } = useError();
 
@@ -41,7 +42,7 @@ const AdminProductManagement: React.FC = () => {
     try {
       const response = await axios.get<PaginatedResponse>('http://localhost:3000/api/products', {
         headers: { Authorization: `Bearer ${token}` },
-        params: { page, limit: 10, search } // Include search term in params
+        params: { page, limit: 10, search }
       });
       setProducts(response.data.products);
       setTotalPages(response.data.totalPages);
@@ -58,6 +59,7 @@ const AdminProductManagement: React.FC = () => {
       });
       fetchProducts(currentPage, searchTerm);
       setError('Product added successfully');
+      setShowAddForm(false); // Hide the form after successful addition
     } catch (error) {
       console.error('Error adding product:', error);
       setError('Failed to add product. Please try again.');
@@ -99,15 +101,28 @@ const AdminProductManagement: React.FC = () => {
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Admin Product Management</h1>
       
-      <h2 className="text-xl font-semibold mb-2">Add New Product</h2>
-      <ProductForm onSubmit={handleAddProduct} onCancel={() => {}} />
+      {/* Add New Product Button */}
+      <button
+        onClick={() => setShowAddForm(!showAddForm)}
+        className="mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+      >
+        {showAddForm ? 'Cancel' : 'Add New Product'}
+      </button>
+
+      {/* Add New Product Form */}
+      {showAddForm && (
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Add New Product</h2>
+          <ProductForm onSubmit={handleAddProduct} onCancel={() => setShowAddForm(false)} />
+        </div>
+      )}
 
       <h2 className="text-xl font-semibold mt-8 mb-2">Product List</h2>
       
