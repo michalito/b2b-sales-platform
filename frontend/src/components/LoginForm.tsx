@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
+import { useError } from '../ErrorContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const { login } = useAuth();
+  const { setError } = useError();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -76,7 +77,6 @@ const LoginForm: React.FC = () => {
           className="w-full p-2 border rounded"
         />
       </div>
-      {error && <p className="text-red-500">{error}</p>}
       <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">Login</button>
       <div className="text-center">
         <Link to="/forgot-password" className="text-blue-500 hover:underline">Forgot Password?</Link>

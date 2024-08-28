@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useError } from '../ErrorContext';
+import { getProducts, deleteProduct } from '../api/productApi';
 
 interface Product {
   id: string;
@@ -25,8 +28,10 @@ interface FilterState {
   sortOrder: 'asc' | 'desc';
   page: number;
   search: string;
+  minDiscount: string;
+  maxDiscount: string;
+  showOnlyAvailable: boolean;
 }
-
 interface FilterOptions {
   categories: string[];
   subCategories: string[];
@@ -49,17 +54,16 @@ const initialFilterState: FilterState = {
   sortOrder: 'asc',
   page: 1,
   search: '',
+  minDiscount: '',
+  maxDiscount: '',
+  showOnlyAvailable: false,
 };
 
 const ProductList: React.FC = () => {
-  const { token, isAuthenticated } = useAuth();
-
+  const { token, user, isAuthenticated } = useAuth();
+  const { setError } = useError();
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
-
-  useEffect(() => {
-    console.log('Token:', token);
-    console.log('Is Authenticated:', isAuthenticated);
-  }, [token, isAuthenticated]);
 
   const { data, isLoading, error, isFetching } = useQuery<ProductResponse>(
     ['products', filters],
@@ -78,7 +82,10 @@ const ProductList: React.FC = () => {
     {
       keepPreviousData: true,
       enabled: isAuthenticated && !!token,
-      onError: (err) => console.error('Products fetch error:', err),
+      onError: (err) => {
+        console.error('Products fetch error:', err);
+        setError('Failed to fetch products. Please try again.');
+      },
     }
   );
 
@@ -100,6 +107,15 @@ const ProductList: React.FC = () => {
       onError: (err) => console.error('Filter options fetch error:', err),
     }
   );
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = event.target;
+    setFilters(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? (event.target as HTMLInputElement).checked : value, 
+      page: 1 
+    }));
+  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilters(prev => ({ ...prev, search: event.target.value, page: 1 }));
@@ -123,6 +139,19 @@ const ProductList: React.FC = () => {
     setFilters(prev => ({ ...prev, page: newPage }));
   };
 
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        await deleteProduct(token!, id);
+        refetch();
+        setError('Product deleted successfully');
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        setError('Failed to delete product. Please try again.');
+      }
+    }
+  };
+
   if (isLoading || optionsLoading) return <div className="text-center mt-8">Loading...</div>;
   if (error || optionsError) {
     console.error('Product error:', error);
@@ -136,11 +165,12 @@ const ProductList: React.FC = () => {
       
       <div className="mb-6 flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
         <input
-            type="text"
-            placeholder="Search products..."
-            value={filters.search}
-            onChange={handleSearchChange}
-            className="w-full sm:w-64 p-2 border rounded"
+          type="text"
+          name="search"
+          placeholder="Search products..."
+          value={filters.search}
+          onChange={handleInputChange}
+          className="w-full sm:w-64 p-2 border rounded"
         />
         <select name="category" onChange={handleFilterChange} value={filters.category} className="w-full sm:w-auto p-2 border rounded">
           <option value="">All Categories</option>
@@ -166,13 +196,45 @@ const ProductList: React.FC = () => {
             <option key={size} value={size}>{size}</option>
           ))}
         </select>
-        <select onChange={handleSortChange} value={`${filters.sortBy}-${filters.sortOrder}`} className="w-full sm:w-auto p-2 border rounded">
+        <div className="flex items-center">
+          <input
+            type="number"
+            name="minDiscount"
+            placeholder="Min Discount %"
+            value={filters.minDiscount}
+            onChange={handleInputChange}
+            className="w-24 p-2 border rounded mr-2"
+          />
+          <span>-</span>
+          <input
+            type="number"
+            name="maxDiscount"
+            placeholder="Max Discount %"
+            value={filters.maxDiscount}
+            onChange={handleInputChange}
+            className="w-24 p-2 border rounded ml-2"
+          />
+        </div>
+        <select name="sortBy" onChange={handleSortChange} value={`${filters.sortBy}-${filters.sortOrder}`} className="w-full sm:w-auto p-2 border rounded">
           <option value="">Sort By</option>
           <option value="name-asc">Name (A-Z)</option>
           <option value="name-desc">Name (Z-A)</option>
           <option value="retailPrice-asc">Price (Low to High)</option>
           <option value="retailPrice-desc">Price (High to Low)</option>
+          <option value="discountPercentage-asc">Discount % (Low to High)</option>
+          <option value="discountPercentage-desc">Discount % (High to Low)</option>
         </select>
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="showOnlyAvailable"
+            name="showOnlyAvailable"
+            checked={filters.showOnlyAvailable}
+            onChange={handleInputChange}
+            className="mr-2"
+          />
+          <label htmlFor="showOnlyAvailable">Show only Available</label>
+        </div>
         <button onClick={clearFilters} className="w-full sm:w-auto p-2 bg-red-500 text-white rounded hover:bg-red-600">
           Clear Filters
         </button>

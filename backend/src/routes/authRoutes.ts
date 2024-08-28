@@ -2,7 +2,7 @@ import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import { authenticate, authorize } from '../middleware/auth';
 
@@ -97,89 +97,91 @@ router.post('/forgot-password', async (req, res) => {
     }
   });
   
-  // Reset password
-  router.post('/reset-password', async (req, res) => {
-    try {
-      const { token, newPassword } = req.body;
-      const user = await prisma.user.findFirst({
-        where: {
-          resetToken: token,
-          resetTokenExpiry: { gt: new Date() },
-        },
-      });
-  
-      if (!user) {
-        return res.status(400).json({ error: 'Invalid or expired reset token' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-  
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          password: hashedPassword,
-          resetToken: null,
-          resetTokenExpiry: null,
-        },
-      });
-  
-      res.json({ message: 'Password reset successful' });
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
+// Reset password
+router.post('/reset-password', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    const user = await prisma.user.findFirst({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: { gt: new Date() },
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid or expired reset token' });
     }
-  });
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password: hashedPassword,
+        resetToken: null,
+        resetTokenExpiry: null,
+      },
+    });
+
+    res.json({ message: 'Password reset successful' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
   
-  // Email verification
-  router.post('/verify-email', async (req, res) => {
-    try {
-      const { token } = req.body;
-      const user = await prisma.user.findFirst({
-        where: { verificationToken: token },
-      });
-  
-      if (!user) {
-        return res.status(400).json({ error: 'Invalid verification token' });
-      }
-  
-      await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          emailVerified: true,
-          verificationToken: null,
-        },
-      });
-  
-      res.json({ message: 'Email verified successfully' });
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
+// Email verification
+router.post('/verify-email', async (req, res) => {
+  try {
+    const { token } = req.body;
+    const user = await prisma.user.findFirst({
+      where: { verificationToken: token },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid verification token' });
     }
-  });
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        emailVerified: true,
+        verificationToken: null,
+      },
+    });
+
+    res.json({ message: 'Email verified successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
   
-  // Admin route to get pending users
-  router.get('/admin/pending-users', authenticate, authorize(['ADMIN']), async (req, res) => {
-    try {
-      const pendingUsers = await prisma.user.findMany({
-        where: { approved: false },
-        select: { id: true, email: true, createdAt: true },
-      });
-      res.json(pendingUsers);
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-    }
-  });
-  
-  // Admin route to approve a user
-  router.post('/admin/approve/:userId', authenticate, authorize(['ADMIN']), async (req, res) => {
-    try {
-      const { userId } = req.params;
-      const user = await prisma.user.update({
-        where: { id: userId },
-        data: { approved: true },
-      });
-      res.json({ message: 'User approved successfully', user });
-    } catch (error) {
-      res.status(500).json({ error: 'Server error' });
-    }
-  });
+// Admin route to get pending users
+router.get('/admin/pending-users', authenticate, authorize(['ADMIN']), async (req, res) => {
+  try {
+    const pendingUsers = await prisma.user.findMany({
+      where: { approved: false },
+      select: { id: true, email: true, createdAt: true },
+    });
+    res.json(pendingUsers);
+  } catch (error) {
+    console.error('Error fetching pending users:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin route to approve a user
+router.post('/approve/:userId', authenticate, authorize(['ADMIN']), async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { approved: true },
+    });
+    res.json({ message: 'User approved successfully', user });
+  } catch (error) {
+    console.error('Error approving user:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
   
   export default router;
