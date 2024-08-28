@@ -6,6 +6,7 @@ import ProductForm from './ProductForm';
 
 interface Product {
   id: string;
+  sku: string;
   name: string;
   color: string;
   retailPrice: number;
@@ -141,6 +142,7 @@ const AdminProductManagement: React.FC = () => {
         <table className="min-w-full bg-white border border-gray-300">
           <thead>
             <tr>
+              <th className="px-4 py-2 border-b">SKU</th>
               <th className="px-4 py-2 border-b">Name</th>
               <th className="px-4 py-2 border-b">Category</th>
               <th className="px-4 py-2 border-b">Price</th>
@@ -151,6 +153,7 @@ const AdminProductManagement: React.FC = () => {
           <tbody>
             {products.map((product) => (
               <tr key={product.id}>
+                <td className="px-4 py-2 border-b">{product.sku}</td>
                 <td className="px-4 py-2 border-b">{product.name}</td>
                 <td className="px-4 py-2 border-b">{product.category}</td>
                 <td className="px-4 py-2 border-b">${product.retailPrice.toFixed(2)}</td>

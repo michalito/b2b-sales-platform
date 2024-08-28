@@ -13,6 +13,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
   const { token } = useAuth();
   const { setError } = useError();
   const [formData, setFormData] = useState<Omit<Product, 'id'>>({
+    sku: '',
     name: '',
     color: '',
     retailPrice: 0,
@@ -44,6 +45,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
+        <label htmlFor="sku" className="block mb-1">SKU</label>
+        <input
+          type="text"
+          id="sku"
+          name="sku"
+          value={formData.sku}
+          onChange={handleChange}
+          required
+          className="w-full p-2 border rounded"
+        />
         <label htmlFor="name" className="block mb-1">Name</label>
         <input
           type="text"

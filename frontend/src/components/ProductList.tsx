@@ -5,9 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import { getProducts, deleteProduct } from '../api/productApi';
+import ProductTile from './ProductTile';  
 
 interface Product {
   id: string;
+  sku: string;
   name: string;
   color: string;
   retailPrice: number;
@@ -17,6 +19,7 @@ interface Product {
   subCategory: string;
   size: string;
   stock: number;
+  imageUrl?: string;
 }
 
 interface FilterState {
@@ -245,44 +248,10 @@ const ProductList: React.FC = () => {
       )}
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-  {data?.products.map(product => (
-    <div key={product.id} className="border rounded-lg shadow-md bg-white overflow-hidden flex flex-col">
-      <div className="relative pt-[56.25%]"> {/* 16:9 aspect ratio */}
-        {product.imageUrl && (
-          <img 
-            src={product.imageUrl} 
-            alt={product.name} 
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '/placeholder-image.png';
-            }}
-          />
-        )}
+        {data?.products.map(product => (
+          <ProductTile key={product.id} product={product} />
+        ))}
       </div>
-      <div className="p-4 flex-grow flex flex-col justify-between">
-        <div>
-          <h2 className="text-lg font-semibold mb-2 truncate">{product.name}</h2>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">{product.color}</span>
-            <span className="text-sm text-gray-600">{product.size}</span>
-          </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-bold">${product.retailPrice.toFixed(2)}</span>
-            <span className="text-sm text-green-600">${product.wholesalePrice.toFixed(2)}</span>
-          </div>
-        </div>
-        <div className="mt-2">
-          {product.discountPercentage > 0 && (
-            <p className="text-sm text-red-500 mb-1">Discount: {product.discountPercentage}% off</p>
-          )}
-          <p className="text-xs text-gray-500">{product.category} - {product.subCategory}</p>
-          <p className="text-xs text-gray-500">Stock: {product.stock} available</p>
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
 
       {/* Pagination */}
       <div className="mt-8 flex flex-wrap justify-center">

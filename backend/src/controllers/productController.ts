@@ -30,6 +30,7 @@ export const getProducts = async (req: Request, res: Response) => {
     if (showOnlyAvailable === 'true') whereClause.stock = { gt: 0 };
     if (search) {
       whereClause.OR = [
+        { sku: { contains: search as string, mode: 'insensitive' } },
         { name: { contains: search as string, mode: 'insensitive' } },
         { category: { contains: search as string, mode: 'insensitive' } },
         { subCategory: { contains: search as string, mode: 'insensitive' } },
@@ -53,6 +54,7 @@ export const getProducts = async (req: Request, res: Response) => {
         take: limitNumber,
         select: {
           id: true,
+          sku: true,
           name: true,
           color: true,
           retailPrice: true,
@@ -130,6 +132,7 @@ export const getProductById = async (req: Request, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
+      sku,
       name,
       color,
       retailPrice,
@@ -144,6 +147,7 @@ export const createProduct = async (req: Request, res: Response) => {
 
     const product = await prisma.product.create({
       data: {
+        sku,
         name,
         color,
         retailPrice: parseFloat(retailPrice),
@@ -168,6 +172,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const {
+      sku,
       name,
       color,
       retailPrice,
@@ -183,6 +188,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     const updatedProduct = await prisma.product.update({
       where: { id },
       data: {
+        sku,
         name,
         color,
         retailPrice: parseFloat(retailPrice),

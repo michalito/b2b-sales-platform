@@ -52,6 +52,7 @@ const ProductDetail: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+      <h3 className="text-xl font-light mb-4">{product.sku}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <img src={product.imageUrl} alt={product.name} className="w-full h-auto" />
