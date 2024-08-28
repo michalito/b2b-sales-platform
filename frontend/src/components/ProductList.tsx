@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import { useAuth } from '../AuthContext';
 
 interface Product {
   id: string;
@@ -51,22 +52,52 @@ const initialFilterState: FilterState = {
 };
 
 const ProductList: React.FC = () => {
+  const { token, isAuthenticated } = useAuth();
+
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
+
+  useEffect(() => {
+    console.log('Token:', token);
+    console.log('Is Authenticated:', isAuthenticated);
+  }, [token, isAuthenticated]);
 
   const { data, isLoading, error, isFetching } = useQuery<ProductResponse>(
     ['products', filters],
     async () => {
-      const response = await axios.get('http://localhost:3000/api/products', { params: filters });
+      if (!token) {
+        throw new Error('Token is missing');
+      }
+      const response = await axios.get('http://localhost:3000/api/products', {
+        params: filters,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     },
-    { keepPreviousData: true }
+    {
+      keepPreviousData: true,
+      enabled: isAuthenticated && !!token,
+      onError: (err) => console.error('Products fetch error:', err),
+    }
   );
 
   const { data: filterOptions, isLoading: optionsLoading, error: optionsError } = useQuery<FilterOptions>(
     'filterOptions',
     async () => {
-      const response = await axios.get('http://localhost:3000/api/products/filter-options');
+      if (!isAuthenticated) {
+        throw new Error('Not authenticated');
+      }
+      const response = await axios.get('http://localhost:3000/api/products/filter-options', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
+    },
+    {
+      enabled: isAuthenticated && !!token,
+      onError: (err) => console.error('Filter options fetch error:', err),
     }
   );
 
@@ -93,7 +124,11 @@ const ProductList: React.FC = () => {
   };
 
   if (isLoading || optionsLoading) return <div className="text-center mt-8">Loading...</div>;
-  if (error || optionsError) return <div className="text-center mt-8 text-red-500">An error occurred</div>;
+  if (error || optionsError) {
+    console.error('Product error:', error);
+    console.error('Filter options error:', optionsError);
+    return <div className="text-center mt-8 text-red-500">An error occurred: {error?.message || optionsError?.message}</div>;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -147,22 +182,45 @@ const ProductList: React.FC = () => {
         <div className="fixed top-0 left-0 w-full h-1 bg-blue-500 animate-pulse"></div>
       )}
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.products.map(product => (
-          <div key={product.id} className="border p-4 rounded shadow-lg bg-white">
-            <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-            <p className="text-gray-600">Color: {product.color}</p>
-            <p className="text-gray-600">Size: {product.size}</p>
-            <p className="font-bold mt-2">Retail Price: ${product.retailPrice.toFixed(2)}</p>
-            <p className="text-green-600">Wholesale Price: ${product.wholesalePrice.toFixed(2)}</p>
-            {product.discountPercentage > 0 && (
-              <p className="text-red-500">Discount: {product.discountPercentage}% off</p>
-            )}
-            <p className="mt-2">Category: {product.category} - {product.subCategory}</p>
-            <p className="text-gray-500">Stock: {product.stock} available</p>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  {data?.products.map(product => (
+    <div key={product.id} className="border rounded-lg shadow-md bg-white overflow-hidden flex flex-col">
+      <div className="relative pt-[56.25%]"> {/* 16:9 aspect ratio */}
+        {product.imageUrl && (
+          <img 
+            src={product.imageUrl} 
+            alt={product.name} 
+            className="absolute top-0 left-0 w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/placeholder-image.png';
+            }}
+          />
+        )}
       </div>
+      <div className="p-4 flex-grow flex flex-col justify-between">
+        <div>
+          <h2 className="text-lg font-semibold mb-2 truncate">{product.name}</h2>
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm text-gray-600">{product.color}</span>
+            <span className="text-sm text-gray-600">{product.size}</span>
+          </div>
+          <div className="flex justify-between items-center mb-2">
+            <span className="font-bold">${product.retailPrice.toFixed(2)}</span>
+            <span className="text-sm text-green-600">${product.wholesalePrice.toFixed(2)}</span>
+          </div>
+        </div>
+        <div className="mt-2">
+          {product.discountPercentage > 0 && (
+            <p className="text-sm text-red-500 mb-1">Discount: {product.discountPercentage}% off</p>
+          )}
+          <p className="text-xs text-gray-500">{product.category} - {product.subCategory}</p>
+          <p className="text-xs text-gray-500">Stock: {product.stock} available</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
 
       {/* Pagination */}
       <div className="mt-8 flex flex-wrap justify-center">
