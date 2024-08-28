@@ -5,9 +5,6 @@ import { useAuth } from '../AuthContext';
 const Navigation: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
 
-  console.log('User in Navigation:', user);
-  console.log('Is authenticated:', isAuthenticated);
-
   return (
     <nav className="bg-gray-800 text-white p-4">
       <ul className="flex justify-between items-center">
@@ -19,9 +16,14 @@ const Navigation: React.FC = () => {
             <>
               <li>Welcome, {user?.email}</li>
               {user?.role === 'ADMIN' && (
-                <li>
-                  <Link to="/admin/approvals" className="hover:text-gray-300">Approvals</Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/admin/approvals" className="hover:text-gray-300">Approvals</Link>
+                  </li>
+                  <li>
+                    <Link to="/admin/products" className="hover:text-gray-300">Manage Products</Link>
+                  </li>
+                </>
               )}
               <li>
                 <button onClick={logout} className="hover:text-gray-300">Logout</button>

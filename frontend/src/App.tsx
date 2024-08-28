@@ -13,6 +13,7 @@ import PasswordResetRequest from './components/PasswordResetRequest';
 import PasswordReset from './components/PasswordReset';
 import EmailVerification from './components/EmailVerification';
 import AdminApproval from './components/AdminApproval';
+import AdminProductManagement from './components/AdminProductManagement';
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,14 @@ const App: React.FC = () => {
                     element={
                       <AdminRoute>
                         <AdminApproval />
+                      </AdminRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/admin/products" 
+                    element={
+                      <AdminRoute>
+                        <AdminProductManagement />
                       </AdminRoute>
                     } 
                   />
