@@ -45,7 +45,7 @@ const ProductTile = ({ product }) => {
           </div>
         )}
       </div>
-      <div className="p-3 flex flex-col justify-between" style={{ minHeight: '250px' }}>
+      <div className="p-3 flex flex-col justify-between" style={{ minHeight: '180px' }}>
         <div>
           <h2 className="text-lg font-semibold mb-1 truncate">{product.name}</h2>
           <div className="flex justify-between items-center mb-1">
