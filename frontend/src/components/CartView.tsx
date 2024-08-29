@@ -2,6 +2,7 @@ import React from 'react';
 import { useCart } from '../CartContext';
 import CartItem from './CartItem';
 import CartSummary from './CartSummary';
+import { Link } from 'react-router-dom';
 
 const CartView: React.FC = () => {
   const { cart, loading, error } = useCart();
@@ -23,7 +24,13 @@ const CartView: React.FC = () => {
           ))}
         </div>
         <div className="md:col-span-1">
-          <CartSummary items={cart.items} />
+            <CartSummary items={cart.items} />
+            <Link 
+            to="/checkout"
+            className="block w-full text-center bg-green-500 text-white py-2 rounded-md mt-4 hover:bg-green-600 transition-colors"
+            >
+            Proceed to Checkout
+            </Link>
         </div>
       </div>
     </div>

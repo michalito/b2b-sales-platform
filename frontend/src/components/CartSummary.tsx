@@ -18,7 +18,7 @@ interface CartSummaryProps {
 
 const CartSummary: React.FC<CartSummaryProps> = ({ items }) => {
   const subtotal = items.reduce((total, item) => total + item.product.wholesalePrice * item.quantity, 0);
-  const tax = subtotal * 0.1; // Assuming 10% tax
+  const tax = subtotal * 0.24; // Assuming 24% tax
   const total = subtotal + tax;
 
   const proceedToCheckout = () => {
@@ -43,12 +43,12 @@ const CartSummary: React.FC<CartSummaryProps> = ({ items }) => {
           <span>${total.toFixed(2)}</span>
         </div>
       </div>
-      <button
+      {/* <button
         onClick={proceedToCheckout}
         className="w-full bg-green-500 text-white py-2 rounded-md mt-4 hover:bg-green-600 transition-colors"
       >
         Proceed to Checkout
-      </button>
+      </button> */}
     </div>
   );
 };

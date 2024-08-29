@@ -142,3 +142,47 @@ export const removeFromCart = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'An error occurred while removing from cart' });
   }
 };
+
+export const getCartTotal = async (req: AuthRequest, res: Response) => {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+      }
+  
+      const userId = req.user.id;
+  
+      // Retrieve cart with items and their associated products
+      const cart = await prisma.cart.findUnique({
+        where: { userId },
+        include: {
+          items: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      });
+  
+      if (!cart || cart.items.length === 0) {
+        return res.json({ total: 0 });
+      }
+  
+      const total = cart.items.reduce((sum, item) => {
+        return sum + (item.product.wholesalePrice * item.quantity);
+      }, 0);
+  
+      // Retrieve user to get discount rate if it exists
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { discountRate: true },
+      });
+  
+      const discountRate = user?.discountRate || 0;
+      const discountedTotal = total * (1 - discountRate);
+  
+      res.json({ total: discountedTotal });
+    } catch (error) {
+      console.error('Error calculating cart total:', error);
+      res.status(500).json({ error: 'An error occurred while calculating the cart total' });
+    }
+  };

@@ -16,6 +16,8 @@ import EmailVerification from './components/EmailVerification';
 import AdminApproval from './components/AdminApproval';
 import AdminProductManagement from './components/AdminProductManagement';
 import CartView from './components/CartView';
+import CheckoutPage from './components/CheckoutPage';
+import OrderConfirmation from './components/OrderConfirmation';
 
 
 const queryClient = new QueryClient();
@@ -85,6 +87,22 @@ const App: React.FC = () => {
                       element={
                         <PrivateRoute>
                           <CartView />
+                        </PrivateRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/checkout" 
+                      element={
+                        <PrivateRoute>
+                          <CheckoutPage />
+                        </PrivateRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/order-confirmation" 
+                      element={
+                        <PrivateRoute>
+                          <OrderConfirmation />
                         </PrivateRoute>
                       } 
                     />
