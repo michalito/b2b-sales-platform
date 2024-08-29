@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider, useAuth } from './AuthContext';
 import { ErrorProvider } from './ErrorContext';
+import { CartProvider } from './CartContext';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorDisplay from './ErrorDisplay';
 import Navigation from './components/Navigation';
@@ -14,6 +15,8 @@ import PasswordReset from './components/PasswordReset';
 import EmailVerification from './components/EmailVerification';
 import AdminApproval from './components/AdminApproval';
 import AdminProductManagement from './components/AdminProductManagement';
+import CartView from './components/CartView';
+
 
 const queryClient = new QueryClient();
 
@@ -41,45 +44,55 @@ const App: React.FC = () => {
     <ErrorBoundary fallback={<div>Something went wrong. Please refresh the page.</div>}>
       <ErrorProvider>
         <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <Router>
-              <ErrorDisplay />
-              <Navigation />
-              <div className="container mx-auto mt-8">
-                <Routes>
-                  <Route path="/login" element={<LoginForm />} />
-                  <Route path="/register" element={<RegisterForm />} />
-                  <Route path="/forgot-password" element={<PasswordResetRequest />} />
-                  <Route path="/reset-password" element={<PasswordReset />} />
-                  <Route path="/verify-email" element={<EmailVerification />} />
-                  <Route 
-                    path="/admin/approvals" 
-                    element={
-                      <AdminRoute>
-                        <AdminApproval />
-                      </AdminRoute>
-                    } 
-                  />
-                  <Route 
-                    path="/admin/products" 
-                    element={
-                      <AdminRoute>
-                        <AdminProductManagement />
-                      </AdminRoute>
-                    } 
-                  />
-                  <Route 
-                    path="/" 
-                    element={
-                      <PrivateRoute>
-                        <ProductList />
-                      </PrivateRoute>
-                    } 
-                  />
-                </Routes>
-              </div>
-            </Router>
-          </QueryClientProvider>
+          <CartProvider>
+            <QueryClientProvider client={queryClient}>
+              <Router>
+                <ErrorDisplay />
+                <Navigation />
+                <div className="container mx-auto mt-8">
+                  <Routes>
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegisterForm />} />
+                    <Route path="/forgot-password" element={<PasswordResetRequest />} />
+                    <Route path="/reset-password" element={<PasswordReset />} />
+                    <Route path="/verify-email" element={<EmailVerification />} />
+                    <Route 
+                      path="/admin/approvals" 
+                      element={
+                        <AdminRoute>
+                          <AdminApproval />
+                        </AdminRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/admin/products" 
+                      element={
+                        <AdminRoute>
+                          <AdminProductManagement />
+                        </AdminRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/" 
+                      element={
+                        <PrivateRoute>
+                          <ProductList />
+                        </PrivateRoute>
+                      } 
+                    />
+                    <Route 
+                      path="/cart" 
+                      element={
+                        <PrivateRoute>
+                          <CartView />
+                        </PrivateRoute>
+                      } 
+                    />
+                  </Routes>
+                </div>
+              </Router>
+            </QueryClientProvider>
+          </CartProvider>
         </AuthProvider>
       </ErrorProvider>
     </ErrorBoundary>

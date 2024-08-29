@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import productRoutes from './routes/productRoutes';
 import authRoutes from './routes/authRoutes';
+import cartRoutes from './routes/cartRoutes';
 import { errorHandler } from './utils/errorHandler';
 
 const app = express();
@@ -11,6 +12,8 @@ app.use(express.json());
 
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes);
+
 
 // Error handling middleware
 app.use(errorHandler);
