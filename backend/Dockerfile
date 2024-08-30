@@ -7,14 +7,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
-# Copy prisma schema
-COPY prisma ./prisma/
+# Copy the rest of the application code
+COPY . .
 
 # Generate Prisma client
 RUN npx prisma generate
-
-# Copy the rest of the application code
-COPY . .
 
 # Build the application
 RUN npm run build
@@ -41,7 +38,7 @@ RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 # Create a directory for logs and set permissions
 RUN mkdir -p /app/logs && chown -R nodeapp:nodejs /app/logs
 
-# Copy the startup script
+# # Copy the startup script
 # COPY docker-entrypoint.sh /usr/local/bin/
 # RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
@@ -62,4 +59,4 @@ ENV NODE_ENV=production
 # ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Command to run the application
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]
