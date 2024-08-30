@@ -42,8 +42,8 @@ RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 RUN mkdir -p /app/logs && chown -R nodeapp:nodejs /app/logs
 
 # Copy the startup script
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# COPY docker-entrypoint.sh /usr/local/bin/
+# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Switch to non-root user
 USER nodeapp
