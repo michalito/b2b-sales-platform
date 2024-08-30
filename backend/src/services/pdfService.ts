@@ -1,3 +1,4 @@
+//@ts-nocheck
 import PDFDocument from 'pdfkit';
 
 export const generateOrderPDF = async (order) => {

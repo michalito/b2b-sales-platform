@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
-import { getProducts, deleteProduct } from '../api/productApi';
-import ProductTile from './ProductTile';  
+import ProductTile from './ProductTile';
+// import { Product as ProductType } from '../types';
 
 interface Product {
   id: string;
@@ -35,6 +34,7 @@ interface FilterState {
   maxDiscount: string;
   showOnlyAvailable: boolean;
 }
+
 interface FilterOptions {
   categories: string[];
   subCategories: string[];
@@ -63,9 +63,9 @@ const initialFilterState: FilterState = {
 };
 
 const ProductList: React.FC = () => {
-  const { token, user, isAuthenticated } = useAuth();
+  const { token, isAuthenticated } = useAuth();
   const { setError } = useError();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
 
   const { data, isLoading, error, isFetching } = useQuery<ProductResponse>(
@@ -111,17 +111,21 @@ const ProductList: React.FC = () => {
     }
   );
 
+  if (optionsLoading) {
+    return <div>Loading filter options...</div>;
+  }
+
+  if (optionsError) {
+    return <div>Error loading filter options: {(optionsError as Error).message}</div>;
+  }
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = event.target;
-    setFilters(prev => ({ 
-      ...prev, 
-      [name]: type === 'checkbox' ? (event.target as HTMLInputElement).checked : value, 
-      page: 1 
+    setFilters(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (event.target as HTMLInputElement).checked : value,
+      page: 1,
     }));
-  };
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters(prev => ({ ...prev, search: event.target.value, page: 1 }));
   };
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -142,24 +146,10 @@ const ProductList: React.FC = () => {
     setFilters(prev => ({ ...prev, page: newPage }));
   };
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      try {
-        await deleteProduct(token!, id);
-        refetch();
-        setError('Product deleted successfully');
-      } catch (error) {
-        console.error('Error deleting product:', error);
-        setError('Failed to delete product. Please try again.');
-      }
-    }
-  };
-
   if (isLoading || optionsLoading) return <div className="text-center mt-8">Loading...</div>;
-  if (error || optionsError) {
+  if (error) {
     console.error('Product error:', error);
-    console.error('Filter options error:', optionsError);
-    return <div className="text-center mt-8 text-red-500">An error occurred: {error?.message || optionsError?.message}</div>;
+    return <div className="text-center mt-8 text-red-500">An error occurred: {(error as Error).message}</div>;
   }
 
   return (

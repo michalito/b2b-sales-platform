@@ -2,21 +2,11 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { useError } from './ErrorContext';
 import * as cartApi from './api/cartApi';
-
-interface CartItem {
-  id: string;
-  productId: string;
-  quantity: number;
-  product: {
-    name: string;
-    wholesalePrice: number;
-    stock: number;
-  };
-}
+import { CartItem as CartItemType } from './types';
 
 interface Cart {
   id: string;
-  items: CartItem[];
+  items: CartItemType[];
 }
 
 interface CartContextType {

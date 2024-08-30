@@ -12,7 +12,7 @@ const RegisterForm: React.FC = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/api/auth/register', { email, password });
-      login(response.data.token);
+      login(response.data.token, response.data.userRole);
     } catch (err) {
       setError('Registration failed. Email might already be in use.');
     }

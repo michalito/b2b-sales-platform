@@ -1,19 +1,11 @@
+// ./CartItem.tsx
 import React, { useState } from 'react';
 import { useCart } from '../CartContext';
 import { Trash2, AlertCircle } from 'lucide-react';
+import { CartItem as CartItemType } from '../types';
 
 interface CartItemProps {
-  item: {
-    id: string;
-    product: {
-      id: string;
-      name: string;
-      wholesalePrice: number;
-      stock: number;
-      imageUrl?: string;
-    };
-    quantity: number;
-  };
+  item: CartItemType;
 }
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {

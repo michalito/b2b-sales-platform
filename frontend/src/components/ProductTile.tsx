@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tag, ShoppingCart, Package, AlertCircle } from 'lucide-react';
 import { useCart } from '../CartContext';
+import { Product } from '../types';
 
-const ProductTile = ({ product }) => {
+interface ProductTileProps {
+  product: Product;
+}
+
+const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [showQuantityInput, setShowQuantityInput] = useState(false);
   const { addToCart } = useCart();
@@ -18,7 +23,7 @@ const ProductTile = ({ product }) => {
     }
   };
 
-  const handleQuantityChange = (e) => {
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Math.max(1, Math.min(parseInt(e.target.value) || 1, product.stock));
     setQuantity(value);
   };

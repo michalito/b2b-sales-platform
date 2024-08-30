@@ -212,6 +212,32 @@ export const updateProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
+    // Check if the product is associated with any orders
+    const orderItemsCount = await prisma.orderItem.count({
+      where: { productId: id }
+    });
+
+    if (orderItemsCount > 0) {
+      return res.status(400).json({ 
+        error: 'Cannot delete product. It is associated with existing orders.',
+        details: `This product is part of ${orderItemsCount} order(s).`
+      });
+    }
+
+    // Check if the product is in any cart
+    const cartItemsCount = await prisma.cartItem.count({
+      where: { productId: id }
+    });
+
+    if (cartItemsCount > 0) {
+      return res.status(400).json({ 
+        error: 'Cannot delete product. It is currently in one or more user carts.',
+        details: `This product is in ${cartItemsCount} user cart(s).`
+      });
+    }
+
+    // If no associated orders or cart items, proceed with deletion
     await prisma.product.delete({
       where: { id }
     });
@@ -219,6 +245,9 @@ export const deleteProduct = async (req: Request, res: Response) => {
     res.json({ message: 'Product deleted successfully' });
   } catch (error) {
     console.error('Error deleting product:', error);
-    res.status(500).json({ error: 'An error occurred while deleting the product' });
+    res.status(500).json({ 
+      error: 'An error occurred while deleting the product',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+// import { useAuth } from '../AuthContext';
+// import { useError } from '../ErrorContext';
+import { Product } from '../types';
 
 interface ProductFormProps {
   product?: Product;
@@ -10,8 +10,6 @@ interface ProductFormProps {
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onCancel }) => {
-  const { token } = useAuth();
-  const { setError } = useError();
   const [formData, setFormData] = useState<Omit<Product, 'id'>>({
     sku: '',
     name: '',

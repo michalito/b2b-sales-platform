@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useCart } from '../CartContext';
 import { getCartTotal, createOrder } from '../api/orderApi';
+import { User } from '../types';
 
 const CheckoutPage: React.FC = () => {
   const { token, user } = useAuth();
@@ -67,10 +68,10 @@ const CheckoutPage: React.FC = () => {
             <span>Total:</span>
             <span>${total.toFixed(2)}</span>
           </div>
-          {user?.discountRate > 0 && (
-            <div className="text-sm text-gray-600 mt-1">
-              Your discount of {(user.discountRate * 100).toFixed(2)}% has been applied
-            </div>
+          {(user as User)?.discountRate > 0 && (
+          <div className="text-sm text-gray-600 mt-1">
+          Your discount of {((user as User).discountRate * 100).toFixed(2)}% has been applied
+          </div>
           )}
         </div>
       </div>

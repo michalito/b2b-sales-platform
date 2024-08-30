@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import ProductForm from './ProductForm';
+import { deleteProduct } from '../api/productApi';
 
 interface Product {
   id: string;
@@ -84,17 +85,22 @@ const AdminProductManagement: React.FC = () => {
   const handleDeleteProduct = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:3000/api/products/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        fetchProducts(currentPage, searchTerm);
+        await deleteProduct(token!, id);
+        // Update the local state to remove the deleted product
+        setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
         setError('Product deleted successfully');
       } catch (error) {
         console.error('Error deleting product:', error);
-        setError('Failed to delete product. Please try again.');
+        if (axios.isAxiosError(error) && error.response) {
+          const errorData = error.response.data;
+          setError(`Failed to delete product: ${errorData.error}${errorData.details ? ` ${errorData.details}` : ''}`);
+        } else {
+          setError('Failed to delete product. Please try again.');
+        }
       }
     }
   };
+  
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);

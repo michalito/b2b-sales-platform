@@ -1,12 +1,17 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "docker-install": "docker-compose exec backend npm install"
+  },
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true
   },
   "keywords": [],
   "author": "",

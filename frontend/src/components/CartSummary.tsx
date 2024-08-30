@@ -21,10 +21,10 @@ const CartSummary: React.FC<CartSummaryProps> = ({ items }) => {
   const tax = subtotal * 0.24; // Assuming 24% tax
   const total = subtotal + tax;
 
-  const proceedToCheckout = () => {
-    // Placeholder function for proceeding to checkout
-    alert('Proceeding to checkout...');
-  };
+//   const proceedToCheckout = () => {
+//     // Placeholder function for proceeding to checkout
+//     alert('Proceeding to checkout...');
+//   };
 
   return (
     <div className="bg-gray-100 p-4 rounded-lg">
