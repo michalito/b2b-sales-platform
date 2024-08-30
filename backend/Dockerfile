@@ -35,6 +35,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 
+# Copy the application code
+COPY . .
+
 # Generate the Prisma Client
 RUN npx prisma generate
 
