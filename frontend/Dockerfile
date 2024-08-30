@@ -8,6 +8,7 @@ RUN npm run build
 
 # Production stage
 FROM node:18-alpine AS prod
+RUN apk add --no-cache curl
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production

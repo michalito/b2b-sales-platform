@@ -1,6 +1,9 @@
 # Build stage
 FROM node:18-alpine AS builder
 
+# Install curl
+RUN apk add --no-cache curl
+
 WORKDIR /app
 
 # Copy package files and install dependencies
