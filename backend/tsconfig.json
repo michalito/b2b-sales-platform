@@ -11,15 +11,16 @@
     /* Modules */
     "module": "commonjs",
 
-    /* Emit */
-    "outDir": "./dist",  // Specify an output folder for all emitted files.
-
     /* Interop Constraints */
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
     /* Type Checking */
     "strict": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

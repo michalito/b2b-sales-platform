@@ -35,12 +35,8 @@ COPY prisma ./prisma/
 # Add a non-root user
 RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 
-# Create a directory for logs and set permissions
-RUN mkdir -p /app/logs && chown -R nodeapp:nodejs /app/logs
-
-# # Copy the startup script
-# COPY docker-entrypoint.sh /usr/local/bin/
-# RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Set correct permissions
+RUN chown -R nodeapp:nodejs /app
 
 # Switch to non-root user
 USER nodeapp
@@ -48,15 +44,8 @@ USER nodeapp
 # Expose the application port
 EXPOSE 3000
 
-# Add healthcheck
-# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-#   CMD node healthcheck.js
-
 # Set environment variables
 ENV NODE_ENV=production
 
-# # Use the startup script as the entry point
-# ENTRYPOINT ["docker-entrypoint.sh"]
-
 # Command to run the application
-CMD ["npm", "start"]
+CMD ["node", "dist/index.js"]
