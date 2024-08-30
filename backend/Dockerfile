@@ -17,8 +17,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # Add a non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodeapp -u 1001
+RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 USER nodeapp
 
 # Expose the application port
@@ -36,17 +35,22 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 
-# Copy the built application and Prisma Client from the build stage
-COPY --from=dev /app/dist ./dist
-COPY --from=dev /app/prisma ./prisma
-COPY --from=dev /app/node_modules/.prisma ./node_modules/.prisma
+# Generate the Prisma Client
+RUN npx prisma generate
 
-# Ensure the Prisma schema is copied as well
+# Build the application
+RUN npm run build
+
+# Copy the built application and Prisma Client from the build stage
+COPY /app/dist ./dist
+COPY /app/prisma ./prisma
+COPY /app/node_modules/.prisma ./node_modules/.prisma
+
+# Ensure the Prisma schema is copied
 COPY prisma/schema.prisma ./prisma/
 
 # Add a non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodeapp -u 1001
+RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 USER nodeapp
 
 # Expose the application port
