@@ -52,8 +52,8 @@ USER nodeapp
 EXPOSE 3000
 
 # Add healthcheck
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD node healthcheck.js
+# HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+#   CMD node healthcheck.js
 
 # Set environment variables
 ENV NODE_ENV=production
