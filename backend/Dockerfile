@@ -33,11 +33,11 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 # Copy the built application and Prisma Client from the build stage
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/prisma ./prisma
+COPY /app/dist ./dist
+COPY /app/prisma ./prisma
 
 # Ensure the Prisma schema is copied as well
-COPY --from=build /app/prisma/schema.prisma ./
+COPY /app/prisma/schema.prisma ./
 
 # Expose the application port
 EXPOSE 3000
