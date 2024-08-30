@@ -41,11 +41,6 @@ RUN npx prisma generate
 # Build the application
 RUN npm run build
 
-# Copy the built application and Prisma Client from the build stage
-COPY /app/dist ./dist
-# COPY /app/prisma ./prisma
-# COPY /app/node_modules/.prisma ./node_modules/.prisma
-
 # Ensure the Prisma schema is copied
 COPY prisma/schema.prisma ./prisma/
 
