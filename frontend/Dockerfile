@@ -17,6 +17,9 @@ CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 # Production stage
 FROM node:18-alpine AS prod
 WORKDIR /app
-COPY --from=build /app/dist /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+COPY /app/dist /app
 EXPOSE 5173
 CMD ["npx", "serve", "-s", "."]
