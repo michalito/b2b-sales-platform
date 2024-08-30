@@ -27,7 +27,6 @@ services:
       - "5173:5173"
     environment:
       - VITE_API_URL=http://backend:3000
-    command: npm start -- --host 0.0.0.0
     depends_on:
       - backend
     networks:
