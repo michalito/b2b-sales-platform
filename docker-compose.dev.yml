@@ -2,7 +2,7 @@ services:
   backend:
     build: 
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: DockerfileDev
       target: dev
     ports:
       - "3000:3000"
@@ -24,7 +24,7 @@ services:
   frontend:
     build: 
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: DockerfileDev
       target: dev
     ports:
       - "5173:5173"

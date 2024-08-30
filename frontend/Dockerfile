@@ -6,17 +6,6 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Development stage
-FROM node:18-alpine AS dev
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-USER nextjs
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
-
 # Production stage
 FROM node:18-alpine AS prod
 WORKDIR /app
