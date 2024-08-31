@@ -33,8 +33,6 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - API_URL=http://<BACKEND_SERVER_IP>:3000/api
-      - ALLOWED_ORIGINS=http://localhost:5173
     depends_on:
       - backend
     networks:
