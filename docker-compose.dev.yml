@@ -10,7 +10,11 @@ services:
     volumes:
       - ./backend:/app:delegated
       - /app/node_modules
-    command: npm run dev
+    command: >
+      sh -c "
+        npx prisma migrate deploy &&
+        npm run dev
+      "
     networks:
       - app-network
     healthcheck:

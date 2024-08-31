@@ -27,4 +27,3 @@ dist-ssr
 #BE
 node_modules
 .env
-/backend/prisma/migrations

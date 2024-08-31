@@ -6,7 +6,8 @@ import authRoutes from './routes/authRoutes';
 import cartRoutes from './routes/cartRoutes';
 import { errorHandler } from './utils/errorHandler';
 import orderRoutes from './routes/orderRoutes';
-
+import testPdfRoute from './routes/pdfTestRoute'
+ 
 const app = express();
 
 app.use(cors({
@@ -18,6 +19,7 @@ app.use(express.json());
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is reachable' });
 });
+app.use('/api/test', testPdfRoute); // Add this line
 
 app.use('/health', healthRouter);
 app.use('/api/products', productRoutes);

@@ -36,10 +36,10 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log('Login attempt:', { email, password: '******' });
+    // console.log('Login attempt:', { email, password: '******' });
 
     const user = await prisma.user.findUnique({ where: { email } });
-    console.log('User found:', user ? 'Yes' : 'No');
+    // console.log('User found:', user ? 'Yes' : 'No');
 
     if (!user) {
       return res.status(400).json({ error: 'Invalid credentials' });
@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password match:', isMatch);
+    // console.log('Password match:', isMatch);
 
     if (!isMatch) {
       return res.status(400).json({ error: 'Invalid credentials' });

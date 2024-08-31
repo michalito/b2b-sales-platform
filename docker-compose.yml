@@ -7,7 +7,11 @@ services:
       - "3000:3000"
     env_file:
       - .env
-    command: npm start
+    command: >
+      sh -c "
+        npx prisma migrate deploy &&
+        npm start
+      "
     networks:
       - app-network
     healthcheck:
