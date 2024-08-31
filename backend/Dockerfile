@@ -34,6 +34,9 @@ COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 # Copy prisma schema (needed for migrations)
 COPY prisma ./prisma/
 
+# Copy assets
+COPY assets ./assets/
+
 # Add a non-root user
 RUN addgroup -g 1001 -S nodejs && adduser -S nodeapp -u 1001
 
