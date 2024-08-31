@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../config';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import ProductForm from './ProductForm';
@@ -26,6 +27,8 @@ interface PaginatedResponse {
   currentPage: number;
 }
 
+const API_URL = config.API_URL;
+
 const AdminProductManagement: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -42,7 +45,7 @@ const AdminProductManagement: React.FC = () => {
 
   const fetchProducts = async (page: number, search: string) => {
     try {
-      const response = await axios.get<PaginatedResponse>('http://localhost:3000/api/products', {
+      const response = await axios.get<PaginatedResponse>(`${API_URL}/products`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { page, limit: 10, search }
       });
@@ -56,7 +59,7 @@ const AdminProductManagement: React.FC = () => {
 
   const handleAddProduct = async (productData: Omit<Product, 'id'>) => {
     try {
-      await axios.post('http://localhost:3000/api/products', productData, {
+      await axios.post(`${API_URL}/products`, productData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProducts(currentPage, searchTerm);
@@ -70,7 +73,7 @@ const AdminProductManagement: React.FC = () => {
 
   const handleEditProduct = async (id: string, productData: Omit<Product, 'id'>) => {
     try {
-      await axios.put(`http://localhost:3000/api/products/${id}`, productData, {
+      await axios.put(`${API_URL}/products/${id}`, productData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProducts(currentPage, searchTerm);

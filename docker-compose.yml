@@ -6,7 +6,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./backend/.env
+      - .env
     command: npm start
     networks:
       - app-network
@@ -18,15 +18,19 @@ services:
       start_period: 40s
     restart: unless-stopped
 
-
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    env_file:
+      - .env
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://backend:3000
+      - API_URL=http://<BACKEND_SERVER_IP>:3000/api
+      - ALLOWED_ORIGINS=http://localhost:5173
     depends_on:
       - backend
     networks:

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import config from '../config';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import ProductTile from './ProductTile';
@@ -48,6 +49,8 @@ interface ProductResponse {
   currentPage: number;
 }
 
+const API_URL = config.API_URL;
+
 const initialFilterState: FilterState = {
   category: '',
   subCategory: '',
@@ -74,7 +77,7 @@ const ProductList: React.FC = () => {
       if (!token) {
         throw new Error('Token is missing');
       }
-      const response = await axios.get('http://localhost:3000/api/products', {
+      const response = await axios.get(`${API_URL}/products`, {
         params: filters,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -98,7 +101,7 @@ const ProductList: React.FC = () => {
       if (!isAuthenticated) {
         throw new Error('Not authenticated');
       }
-      const response = await axios.get('http://localhost:3000/api/products/filter-options', {
+      const response = await axios.get(`${API_URL}/products/filter-options`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
+import config from '../config';
 
 interface User {
   id: string;
@@ -9,6 +10,8 @@ interface User {
   approved: boolean;
   createdAt: string;
 }
+
+const API_URL = config.API_URL;
 
 const AdminApproval: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -18,7 +21,7 @@ const AdminApproval: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/auth/admin/pending-users', {
+        const response = await axios.get(`${API_URL}/auth/admin/pending-users`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUsers(response.data);
@@ -33,7 +36,7 @@ const AdminApproval: React.FC = () => {
 
   const approveUser = async (userId: string) => {
     try {
-      await axios.post(`http://localhost:3000/api/auth/approve/${userId}`, {}, {
+      await axios.post(`${API_URL}/auth/approve/${userId}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(users.filter(user => user.id !== userId));

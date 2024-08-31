@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
+import config from '../config';
+
+const API_URL = config.API_URL;
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +14,7 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', { email, password });
+      const response = await axios.post(`${API_URL}/auth/register`, { email, password });
       login(response.data.token, response.data.userRole);
     } catch (err) {
       setError('Registration failed. Email might already be in use.');

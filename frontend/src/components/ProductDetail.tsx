@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import { Product } from '../types';
+
+const API_URL = config.API_URL;
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +18,7 @@ const ProductDetail: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/products/${id}`, {
+        const response = await axios.get(`${API_URL}/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProduct(response.data);
@@ -35,7 +38,7 @@ const ProductDetail: React.FC = () => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        await axios.delete(`http://localhost:3000/api/products/${id}`, {
+        await axios.delete(`${API_URL}/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         navigate('/products');

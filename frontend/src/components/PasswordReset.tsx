@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from '../config';
 import { useLocation } from 'react-router-dom';
+
+const API_URL = config.API_URL;
 
 const PasswordReset: React.FC = () => {
   const [password, setPassword] = useState('');
@@ -17,7 +20,7 @@ const PasswordReset: React.FC = () => {
       return;
     }
     try {
-      await axios.post('http://localhost:3000/api/auth/reset-password', { token, newPassword: password });
+      await axios.post(`${API_URL}/auth/reset-password`, { token, newPassword: password });
       setMessage('Password reset successful. You can now log in with your new password.');
     } catch (error) {
       setMessage('An error occurred. Please try again.');

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import config from '../config';
+
+const API_URL = config.API_URL;
 
 const PasswordResetRequest: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +11,7 @@ const PasswordResetRequest: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/auth/forgot-password', { email });
+      await axios.post(`${API_URL}/auth/forgot-password`, { email });
       setMessage('If an account with that email exists, we sent a password reset link.');
     } catch (error) {
       setMessage('An error occurred. Please try again.');

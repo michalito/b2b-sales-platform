@@ -1,12 +1,12 @@
 services:
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: DockerfileDev
     ports:
       - "3000:3000"
     env_file:
-      - ./backend/.env
+      - .env
     volumes:
       - ./backend:/app:delegated
       - /app/node_modules
@@ -19,11 +19,16 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    restart: unless-stopped
 
   frontend:
-    build: 
+    build:
       context: ./frontend
       dockerfile: DockerfileDev
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    env_file:
+      - .env
     ports:
       - "5173:5173"
     volumes:
@@ -31,18 +36,14 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - VITE_API_URL=http://backend:3000
+      - VITE_API_URL=${VITE_API_URL}
+      - ALLOWED_ORIGINS=http://localhost:5173
     command: npm run dev -- --host 0.0.0.0
     depends_on:
       - backend
     networks:
       - app-network
-    # healthcheck:
-    #   test: ["CMD-SHELL", "curl -f http://localhost:5173/health || exit 1"]
-    #   interval: 1m30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
+    restart: unless-stopped
 
 networks:
   app-network:

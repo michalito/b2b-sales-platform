@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = config.API_URL;
 
 export const createOrder = async (token: string) => {
   const response = await axios.post(`${API_URL}/orders/create`, {}, {

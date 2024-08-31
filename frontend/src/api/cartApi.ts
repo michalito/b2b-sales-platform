@@ -1,6 +1,7 @@
 import axios from 'axios';
+import config from '../config';
 
-const API_URL = 'http://localhost:3000/api';
+const API_URL = config.API_URL;
 
 export const getCart = async (token: string) => {
   const response = await axios.get(`${API_URL}/cart`, {
