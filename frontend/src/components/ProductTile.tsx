@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tag, ShoppingCart, Package, AlertCircle } from 'lucide-react';
 import { useCart } from '../CartContext';
 import { Product } from '../types';
@@ -11,6 +12,7 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [showQuantityInput, setShowQuantityInput] = useState(false);
   const { addToCart } = useCart();
+  const { t } = useTranslation();
 
   const handleAddToCart = () => {
     if (showQuantityInput) {
@@ -61,14 +63,14 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
           </div>
           <div className="flex justify-between items-center mb-2">
             <div>
-              <span className="text-lg font-bold">${product.wholesalePrice.toFixed(2)}</span>
-              <span className="text-xs text-gray-500 ml-1">wholesale</span>
+              <span className="text-lg font-bold">{product.wholesalePrice.toFixed(2)}€</span>
+              <span className="text-xs text-gray-500 ml-1">{t('product.wholesale')}</span>
             </div>
-            <span className="text-sm text-gray-500 line-through">${product.retailPrice.toFixed(2)} retail</span>
+            <span className="text-sm text-gray-500 line-through">{product.retailPrice.toFixed(2)}€ {t('product.retail')}</span>
           </div>
           <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
             <span className="flex items-center">
-              <Package size={16} className="mr-1" /> {product.stock} in stock
+              <Package size={16} className="mr-1" /> {product.stock} {t('product.inStock')}
             </span>
             <span>{product.category}</span>
           </div>
@@ -76,7 +78,7 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
             <div className="mb-2" style={{ height: '24px' }}>
               <p className="text-orange-500 flex items-center text-sm">
                 <AlertCircle size={16} className="mr-1" />
-                Only {product.stock} left
+                {t('product.lowStock', { count: product.stock })}
               </p>
             </div>
           )}
@@ -84,12 +86,12 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
       </div>
       <div className="bg-gray-100 p-3">
         {product.stock === 0 ? (
-          <p className="text-red-500 text-center bg-red-100 p-2 rounded">Out of stock</p>
+          <p className="text-red-500 text-center bg-red-100 p-2 rounded">{t('product.outOfStock')}</p>
         ) : (
           <>
             {showQuantityInput && (
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor={`quantity-${product.id}`} className="text-sm font-medium">Quantity:</label>
+                <label htmlFor={`quantity-${product.id}`} className="text-sm font-medium">{t('product.quantity')}:</label>
                 <input
                   id={`quantity-${product.id}`}
                   type="number"
@@ -106,7 +108,8 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
               className="w-full bg-blue-500 text-white py-2 rounded-md flex items-center justify-center hover:bg-blue-600 transition-colors"
               aria-label={`Add ${product.name} to cart`}
             >
-              <ShoppingCart size={18} className="mr-2" /> {showQuantityInput ? 'Confirm' : 'Add to Cart'}
+            <ShoppingCart size={18} className="mr-2" /> 
+            {showQuantityInput ? t('product.confirm') : t('product.addToCart')}
             </button>
           </>
         )}

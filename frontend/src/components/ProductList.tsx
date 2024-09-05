@@ -5,6 +5,7 @@ import config from '../config';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
 import ProductTile from './ProductTile';
+import { useTranslation } from 'react-i18next';
 // import { Product as ProductType } from '../types';
 
 interface Product {
@@ -68,6 +69,7 @@ const initialFilterState: FilterState = {
 const ProductList: React.FC = () => {
   const { token, isAuthenticated } = useAuth();
   const { setError } = useError();
+  const { t } = useTranslation();
   // const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>(initialFilterState);
 
@@ -157,37 +159,37 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Product List</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">{t('productList.title')}</h1>
       
       <div className="mb-6 flex flex-col sm:flex-row flex-wrap gap-4 justify-center">
         <input
           type="text"
           name="search"
-          placeholder="Search products..."
+          placeholder={t('productList.searchPlaceholder')}
           value={filters.search}
           onChange={handleInputChange}
           className="w-full sm:w-64 p-2 border rounded"
         />
         <select name="category" onChange={handleFilterChange} value={filters.category} className="w-full sm:w-auto p-2 border rounded">
-          <option value="">All Categories</option>
+        <option value="">{t('productList.allCategories')}</option>
           {filterOptions?.categories.map(category => (
             <option key={category} value={category}>{category}</option>
           ))}
         </select>
         <select name="subCategory" onChange={handleFilterChange} value={filters.subCategory} className="w-full sm:w-auto p-2 border rounded">
-          <option value="">All Subcategories</option>
+        <option value="">{t('productList.allSubcategories')}</option>
           {filterOptions?.subCategories.map(subCategory => (
             <option key={subCategory} value={subCategory}>{subCategory}</option>
           ))}
         </select>
         <select name="color" onChange={handleFilterChange} value={filters.color} className="w-full sm:w-auto p-2 border rounded">
-          <option value="">All Colors</option>
+        <option value="">{t('productList.allColors')}</option>
           {filterOptions?.colors.map(color => (
             <option key={color} value={color}>{color}</option>
           ))}
         </select>
         <select name="size" onChange={handleFilterChange} value={filters.size} className="w-full sm:w-auto p-2 border rounded">
-          <option value="">All Sizes</option>
+        <option value="">{t('productList.allSizes')}</option>
           {filterOptions?.sizes.map(size => (
             <option key={size} value={size}>{size}</option>
           ))}
@@ -212,13 +214,13 @@ const ProductList: React.FC = () => {
           />
         </div>
         <select name="sortBy" onChange={handleSortChange} value={`${filters.sortBy}-${filters.sortOrder}`} className="w-full sm:w-auto p-2 border rounded">
-          <option value="">Sort By</option>
-          <option value="name-asc">Name (A-Z)</option>
-          <option value="name-desc">Name (Z-A)</option>
-          <option value="retailPrice-asc">Price (Low to High)</option>
-          <option value="retailPrice-desc">Price (High to Low)</option>
-          <option value="discountPercentage-asc">Discount % (Low to High)</option>
-          <option value="discountPercentage-desc">Discount % (High to Low)</option>
+          <option value="">{t('productList.sortBy')}</option>
+          <option value="name-asc">{t('productList.nameAZ')}</option>
+          <option value="name-desc">{t('productList.nameZA')}</option>
+          <option value="retailPrice-asc">{t('productList.priceLowHigh')}</option>
+          <option value="retailPrice-desc">{t('productList.priceHighLow')}</option>
+          <option value="discountPercentage-asc">{t('productList.discountLowHigh')}</option>
+          <option value="discountPercentage-desc">{t('productList.discountHighLow')}</option>
         </select>
         <div className="flex items-center">
           <input
@@ -229,10 +231,10 @@ const ProductList: React.FC = () => {
             onChange={handleInputChange}
             className="mr-2"
           />
-          <label htmlFor="showOnlyAvailable">Show only Available</label>
+          <label htmlFor="showOnlyAvailable">{t('productList.showOnlyAvailable')}</label>
         </div>
         <button onClick={clearFilters} className="w-full sm:w-auto p-2 bg-red-500 text-white rounded hover:bg-red-600">
-          Clear Filters
+        {t('productList.clearFilters')}
         </button>
       </div>
 

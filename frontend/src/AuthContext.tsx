@@ -5,6 +5,7 @@ import * as jwtDecode from 'jwt-decode';
 interface User {
   email: string;
   role: string;
+  name: string;
 }
 
 interface AuthContextType {
@@ -23,8 +24,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = (token: string, userRole: string) => {
     setToken(token);
-    const decodedToken = jwtDecode.jwtDecode(token) as { email: string };
-    setUser({ email: decodedToken.email, role: userRole });
+    const decodedToken = jwtDecode.jwtDecode(token) as { email: string, name: string };
+    setUser({ email: decodedToken.email, role: userRole, name: decodedToken.name });
     localStorage.setItem('token', token);
     localStorage.setItem('userRole', userRole);
   };
@@ -42,12 +43,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const storedToken = localStorage.getItem('token');
     const storedUserRole = localStorage.getItem('userRole');
     if (storedToken && storedUserRole) {
-      const decodedToken = jwtDecode.jwtDecode(storedToken) as { exp: number, email: string };
+      const decodedToken = jwtDecode.jwtDecode(storedToken) as { exp: number, email: string, name: string };
       if (decodedToken.exp * 1000 < Date.now()) {
         logout();
       } else {
         setToken(storedToken);
-        setUser({ email: decodedToken.email, role: storedUserRole });
+        setUser({ email: decodedToken.email, role: storedUserRole, name: decodedToken.name });
       }
     }
   }, []);

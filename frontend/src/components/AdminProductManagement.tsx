@@ -165,7 +165,7 @@ const AdminProductManagement: React.FC = () => {
                 <td className="px-4 py-2 border-b">{product.sku}</td>
                 <td className="px-4 py-2 border-b">{product.name}</td>
                 <td className="px-4 py-2 border-b">{product.category}</td>
-                <td className="px-4 py-2 border-b">${product.retailPrice.toFixed(2)}</td>
+                <td className="px-4 py-2 border-b">{product.retailPrice.toFixed(2)}€</td>
                 <td className="px-4 py-2 border-b">{product.stock}</td>
                 <td className="px-4 py-2 border-b">
                   <button

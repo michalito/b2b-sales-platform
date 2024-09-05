@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CartItem {
   id: string;
@@ -17,30 +18,27 @@ interface CartSummaryProps {
 }
 
 const CartSummary: React.FC<CartSummaryProps> = ({ items }) => {
+  const { t } = useTranslation();
+
   const subtotal = items.reduce((total, item) => total + item.product.wholesalePrice * item.quantity, 0);
   const tax = subtotal * 0.24; // Assuming 24% tax
   const total = subtotal + tax;
 
-//   const proceedToCheckout = () => {
-//     // Placeholder function for proceeding to checkout
-//     alert('Proceeding to checkout...');
-//   };
-
   return (
     <div className="bg-gray-100 p-4 rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+      <h2 className="text-xl font-bold mb-4">{t('cart.summaryTitle')}</h2>
       <div className="space-y-2">
         <div className="flex justify-between">
-          <span>Subtotal:</span>
-          <span>${subtotal.toFixed(2)}</span>
+          <span>{t('cart.subtotal')}:</span>
+          <span>{subtotal.toFixed(2)}€</span>
         </div>
         <div className="flex justify-between">
-          <span>Tax (24%):</span>
-          <span>${tax.toFixed(2)}</span>
+          <span>{t('cart.tax')} (24%):</span>
+          <span>{tax.toFixed(2)}€</span>
         </div>
         <div className="flex justify-between font-bold text-lg border-t pt-2">
-          <span>Total:</span>
-          <span>${total.toFixed(2)}</span>
+          <span>{t('cart.total')}:</span>
+          <span>{total.toFixed(2)}€</span>
         </div>
       </div>
       {/* <button

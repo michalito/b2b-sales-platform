@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = config.API_URL;
 
 const PasswordResetRequest: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
@@ -12,16 +14,16 @@ const PasswordResetRequest: React.FC = () => {
     e.preventDefault();
     try {
       await axios.post(`${API_URL}/auth/forgot-password`, { email });
-      setMessage('If an account with that email exists, we sent a password reset link.');
+      setMessage(t('forgotPassword.successMessage'));
     } catch (error) {
-      setMessage('An error occurred. Please try again.');
+      setMessage(t('forgotPassword.errorMessage'));
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block mb-2">Email</label>
+        <label htmlFor="email" className="block mb-2">{t('login.email')}</label>
         <input
           type="email"
           id="email"
@@ -32,7 +34,7 @@ const PasswordResetRequest: React.FC = () => {
         />
       </div>
       <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">
-        Request Password Reset
+      {t('forgotPassword.passwordResetRequestButton')}
       </button>
       {message && <p className="mt-4 text-center">{message}</p>}
     </form>

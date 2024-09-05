@@ -18,6 +18,7 @@ export interface Product {
     email: string;
     role: string;
     discountRate: number;
+    name: string;
   }
   
   export interface CartItem {

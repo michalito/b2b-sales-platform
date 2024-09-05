@@ -32,7 +32,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       />
       <div className="flex-grow">
         <h3 className="font-semibold">{item.product.name}</h3>
-        <p className="text-gray-600">${item.product.wholesalePrice.toFixed(2)} each</p>
+        <p className="text-gray-600">{item.product.wholesalePrice.toFixed(2)}€ each</p>
         <div className="flex items-center mt-2">
           <input
             type="number"
@@ -48,7 +48,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         </div>
       </div>
       <div className="text-right">
-        <p className="font-bold">${(item.product.wholesalePrice * quantity).toFixed(2)}</p>
+        <p className="font-bold">{(item.product.wholesalePrice * quantity).toFixed(2)}€</p>
         {item.product.stock <= 2 && (
           <p className="text-orange-500 flex items-center text-sm mt-2">
             <AlertCircle size={16} className="mr-1" />

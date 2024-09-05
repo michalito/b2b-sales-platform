@@ -44,7 +44,7 @@ const drawFooter = (doc: PDFKit.PDFDocument, pageHeight: number) => {
   doc
     .fillColor('#888888')
     .fontSize(10)
-    .text('Thank you for your business!', 0, footerY + 20, {
+    .text('Ευχαριστούμε!', 0, footerY + 20, {
       align: 'center',
       width: doc.page.width,
     });

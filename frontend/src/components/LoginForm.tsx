@@ -3,11 +3,14 @@ import axios from 'axios';
 import config from '../config';
 import { useAuth } from '../AuthContext';
 import { useError } from '../ErrorContext';
-import { Link, useNavigate } from 'react-router-dom';
+// import { Link, useNavigate } from 'react-router-dom'; TO BE IMPLEMENTED
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = config.API_URL;
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
@@ -59,7 +62,7 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
       <div>
-        <label htmlFor="email" className="block mb-2">Email</label>
+        <label htmlFor="email" className="block mb-2">{t('login.email')}</label>
         <input
           type="email"
           id="email"
@@ -70,7 +73,7 @@ const LoginForm: React.FC = () => {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block mb-2">Password</label>
+        <label htmlFor="password" className="block mb-2">{t('login.password')}</label>
         <input
           type="password"
           id="password"
@@ -80,10 +83,10 @@ const LoginForm: React.FC = () => {
           className="w-full p-2 border rounded"
         />
       </div>
-      <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">Login</button>
-      <div className="text-center">
-        <Link to="/forgot-password" className="text-blue-500 hover:underline">Forgot Password?</Link>
-      </div>
+      <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">{t('login.loginButton')}</button>
+      {/* <div className="text-center">
+        <Link to="/forgot-password" className="text-blue-500 hover:underline">{t('login.forgotPassword')}</Link>
+      </div> */}
     </form>
   );
 };

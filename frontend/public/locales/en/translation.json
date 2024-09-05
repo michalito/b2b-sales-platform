@@ -1,0 +1,82 @@
+{
+    "nav": {
+      "home": "Home",
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "cart": "Cart",
+      "welcome": "Welcome"
+    },
+    "productList": {
+      "title": "Product List",
+      "searchPlaceholder": "Search products...",
+      "allCategories": "All Categories",
+      "allSubcategories": "All Subcategories",
+      "allColors": "All Colors",
+      "allSizes": "All Sizes",
+      "sortBy": "Sort By",
+      "nameAZ": "Name (A-Z)",
+      "nameZA": "Name (Z-A)",
+      "priceLowHigh": "Price (Low to High)",
+      "priceHighLow": "Price (High to Low)",
+      "discountLowHigh": "Discount % (Low to High)",
+      "discountHighLow": "Discount % (High to Low)",
+      "clearFilters": "Clear Filters",
+      "showOnlyAvailable": "Show only Available"
+    },
+    "product": {
+      "wholesale": "wholesale",
+      "retail": "retail",
+      "inStock": "in stock",
+      "lowStock": "Only {{count}} left",
+      "outOfStock": "Out of stock",
+      "quantity": "Quantity",
+      "addToCartAria": "Add {{name}} to cart",
+      "confirm": "Confirm",
+      "addToCart": "Add to Cart"
+    },
+    "cart": {
+      "loading": "Loading cart...",
+      "error": "Error loading cart",
+      "empty": "Your cart is empty",
+      "title": "Your Cart",
+      "proceedToCheckout": "Proceed to Checkout",
+      "summaryTitle": "Order Summary",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "total": "Total"
+    },
+    "checkout": {
+      "title": "Checkout",
+      "summaryTitle": "Order Summary",
+      "subtotal": "Subtotal",
+      "tax": "Tax",
+      "discountApplied": "Your discount of {{discountRate}}% has been applied",
+      "total": "Total",
+      "processing": "Processing...",
+      "confirmOrderAndDownload": "Confirm Order and Download PDF",
+      "orderConfirmed": "Order Confirmed!",
+      "confirmedOrderMessage": "Thank you for your order. A PDF confirmation has been downloaded to your device.",
+      "returnHomeButton": "Return to Home"
+    },
+    "login": {
+      "invalidResponse": "Invalid response from server",
+      "invalidCredentials": "Invalid email or password.",
+      "unauthorizedAccess": "Unauthorized access. Please check your credentials.",
+      "serverError": "Internal server error. Please try again later.",
+      "unknownError": "An error occurred",
+      "networkError": "No response from the server. Please check your network connection.",
+      "requestSetupError": "Error in setting up the request.",
+      "unexpectedError": "An unexpected error occurred",
+      "email": "Email",
+      "password": "Password",
+      "loginButton": "Login",
+      "forgotPassword": "Forgot Password?",
+      "register": "Register"
+    },
+    "forgotPassword": {
+      "passwordResetRequestButton": "Request Password Reset",
+      "successMessage": "If an account with that email exists, we sent a password reset link.",
+      "errorMessage": "An error occurred. Please try again."
+    }
+  }

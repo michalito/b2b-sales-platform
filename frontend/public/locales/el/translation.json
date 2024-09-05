@@ -1,0 +1,83 @@
+{
+    "nav": {
+      "home": "Αρχική",
+      "login": "Σύνδεση",
+      "register": "Εγγραφή",
+      "logout": "Αποσύνδεση",
+      "cart": "Καλάθι",
+      "welcome": "Καλωσήρθατε"
+    },
+    "productList": {
+      "title": "Λίστα Προϊόντων",
+      "searchPlaceholder": "Αναζήτηση προϊόντων...",
+      "allCategories": "Όλες οι Κατηγορίες",
+      "allSubcategories": "Όλες οι Υποκατηγορίες",
+      "allColors": "Όλα τα Χρώματα",
+      "allSizes": "Όλα τα Μεγέθη",
+      "sortBy": "Ταξινόμηση κατά",
+      "nameAZ": "Όνομα (A-Z)",
+      "nameZA": "Όνομα (Z-A)",
+      "priceLowHigh": "Τιμή (Από Χαμηλή σε Υψηλή)",
+      "priceHighLow": "Τιμή (Από Υψηλή σε Χαμηλή)",
+      "discountLowHigh": "Έκπτωση % (Από Χαμηλή σε Υψηλή)",
+      "discountHighLow": "Έκπτωση % (Από Υψηλή σε Χαμηλή)",
+      "clearFilters": "Καθαρισμός Φίλτρων",
+      "showOnlyAvailable": "Εμφάνιση μόνο Διαθέσιμων"
+    },
+    "product": {
+      "wholesale": "χονδρική",
+      "retail": "λιανική",
+      "inStock": "σε απόθεμα",
+      "lowStock": "Μόνο {{count}} απέμειναν",
+      "outOfStock": "Εξαντλήθηκε",
+      "quantity": "Ποσότητα",
+      "addToCartAria": "Προσθήκη {{name}} στο καλάθι",
+      "confirm": "Επιβεβαίωση",
+      "addToCart": "Προσθήκη στο Καλάθι"
+    },
+    "cart": {
+      "loading": "Φόρτωση καλαθιού...",
+      "error": "Σφάλμα φόρτωσης καλαθιού",
+      "empty": "Το καλάθι σας είναι άδειο",
+      "title": "Το Καλάθι σας",
+      "proceedToCheckout": "Ολοκλήρωση Παραγγελίας",
+      "summaryTitle": "Περίληψη Παραγγελίας",
+      "subtotal": "Υποσύνολο",
+      "tax": "ΦΠΑ",
+      "total": "Σύνολο"
+    },
+    "checkout": {
+      "title": "Ολοκλήρωση Αγοράς",
+      "summaryTitle": "Περίληψη Παραγγελίας",
+      "subtotal": "Υποσύνολο",
+      "tax": "Φόρος",
+      "discountApplied": "Η έκπτωσή σας {{discountRate}}% έχει εφαρμοστεί",
+      "total": "Σύνολο",
+      "processing": "Επεξεργασία...",
+      "confirmOrderAndDownload": "Επιβεβαίωση Παραγγελίας και Λήψη PDF",
+      "orderConfirmed": "Η Παραγγελία Επιβεβαιώθηκε!",
+      "confirmedOrderMessage": "Σας ευχαριστούμε για την παραγγελία σας. Ένα PDF επιβεβαίωσης έχει ληφθεί στη συσκευή σας.",
+      "returnHomeButton": "Επιστροφή στην Αρχική"
+    },
+    "login": {
+      "invalidResponse": "Μη έγκυρη απάντηση από τον διακομιστή",
+      "invalidCredentials": "Μη έγκυρο email ή κωδικός πρόσβασης.",
+      "unauthorizedAccess": "Μη εξουσιοδοτημένη πρόσβαση. Παρακαλώ ελέγξτε τα διαπιστευτήριά σας.",
+      "serverError": "Εσωτερικό σφάλμα διακομιστή. Παρακαλώ δοκιμάστε ξανά αργότερα.",
+      "unknownError": "Προέκυψε ένα σφάλμα",
+      "networkError": "Δεν υπάρχει απάντηση από τον διακομιστή. Παρακαλώ ελέγξτε τη σύνδεσή σας στο διαδίκτυο.",
+      "requestSetupError": "Σφάλμα στη ρύθμιση του αιτήματος.",
+      "unexpectedError": "Προέκυψε ένα απροσδόκητο σφάλμα",
+      "email": "Email",
+      "password": "Κωδικός πρόσβασης",
+      "loginButton": "Σύνδεση",
+      "forgotPassword": "Ξεχάσατε τον κωδικό σας;",
+      "register": "Εγγραφή",
+      "passwordResetRequestButton": "Αίτηση Επαναφοράς Κωδικού"
+    },
+    "forgotPassword": {
+      "passwordResetRequestButton": "Αίτηση Επαναφοράς Κωδικού",
+      "successMessage": "Εάν υπάρχει λογαριασμός με αυτό το email, σας στείλαμε έναν σύνδεσμο για επαναφορά κωδικού.",
+      "errorMessage": "Παρουσιάστηκε ένα σφάλμα. Παρακαλούμε δοκιμάστε ξανά."
+    }
+  }
