@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider, useAuth } from './AuthContext';
@@ -108,6 +109,7 @@ const App: React.FC = () => {
                     />
                   </Routes>
                 </div>
+                <Footer />
               </Router>
             </QueryClientProvider>
           </CartProvider>

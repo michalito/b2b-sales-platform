@@ -32,11 +32,12 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className="bg-gray-800 text-white p-4">
-      <ul className="flex justify-between items-center">
-        <li>
-          <Link to="/" className="text-xl font-bold">{t('nav.home')}</Link>
-        </li>
-        <div className="flex space-x-4 items-center">
+      <div className="container mx-auto flex justify-between items-center">
+        <Link to="/" className="flex items-center">
+          <img src="../../public/logo/logo-w.svg" alt="Company Logo" className="h-8 w-auto mr-2" />
+          <span className="text-xl font-bold">{t('nav.home')}</span>
+        </Link>
+        <ul className="flex space-x-4 items-center">
           {isAuthenticated ? (
             <>
               <li>{t('nav.welcome')}, {user?.name}</li>
@@ -101,8 +102,8 @@ const Navigation: React.FC = () => {
               </div>
             )}
           </li>
-        </div>
-      </ul>
+        </ul>
+      </div>
     </nav>
   );
 };

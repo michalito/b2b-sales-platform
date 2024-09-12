@@ -60,35 +60,43 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
-      <div>
-        <label htmlFor="email" className="block mb-2">{t('login.email')}</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <img src="../../public/logo/logo.svg" alt="Company Logo" className="mx-auto w-auto" />
+          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">{t('login.signIn')}</h2>
+        </div>
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">{t('login.email')}</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-6">
+            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">{t('login.password')}</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              {t('login.loginButton')}
+            </button>
+          </div>
+        </form>
       </div>
-      <div>
-        <label htmlFor="password" className="block mb-2">{t('login.password')}</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-      </div>
-      <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">{t('login.loginButton')}</button>
-      {/* <div className="text-center">
-        <Link to="/forgot-password" className="text-blue-500 hover:underline">{t('login.forgotPassword')}</Link>
-      </div> */}
-    </form>
+    </div>
   );
 };
-
 export default LoginForm;

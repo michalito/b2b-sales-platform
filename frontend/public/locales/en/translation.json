@@ -60,6 +60,7 @@
       "returnHomeButton": "Return to Home"
     },
     "login": {
+      "signIn": "Sign In",
       "invalidResponse": "Invalid response from server",
       "invalidCredentials": "Invalid email or password.",
       "unauthorizedAccess": "Unauthorized access. Please check your credentials.",
@@ -78,5 +79,18 @@
       "passwordResetRequestButton": "Request Password Reset",
       "successMessage": "If an account with that email exists, we sent a password reset link.",
       "errorMessage": "An error occurred. Please try again."
+    },
+    "footer": {
+      "companyDescription": "Exlusive Distibutor for Fitness Equipment and Apparel",
+      "quickLinks": "Quick Links",
+      "products": "Products",
+      "about": "About",
+      "contact": "Contact",
+      "retail": "Retail",
+      "contactUs": "Contact Us",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "allRightsReserved": "All Rights Reserved"
     }
   }
