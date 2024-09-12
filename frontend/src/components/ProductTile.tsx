@@ -14,6 +14,9 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
   const { addToCart } = useCart();
   const { t } = useTranslation();
 
+  // const optimizedImageUrl = `${product.imageUrl}?auto=compress,format&fit=crop&w=300&h=300&q=80`; //Quality 80%
+  const optimizedImageUrl = `${product.imageUrl}?auto=compress,format&fit=crop&w=600&h=600`;
+
   const handleAddToCart = () => {
     if (showQuantityInput) {
       addToCart(product.id, quantity);
@@ -36,15 +39,15 @@ const ProductTile: React.FC<ProductTileProps> = ({ product }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
-      <div className="relative pt-[56.25%]">
-        {product.imageUrl && (
-          <img 
-            src={product.imageUrl} 
-            alt={product.name} 
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            onError={(e) => { e.currentTarget.src = '/placeholder-image.png'; }}
-            loading="lazy"
-          />
+      <div className="relative pt-[100%] overflow-hidden">
+        {optimizedImageUrl && (
+        <img 
+        src={optimizedImageUrl} 
+        alt={product.name} 
+        className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+        onError={(e) => { e.currentTarget.src = '/placeholder-image.png'; }}
+        loading="lazy"
+      />
         )}
         {product.discountPercentage > 0 && (
           <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
