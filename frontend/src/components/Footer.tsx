@@ -17,7 +17,11 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2">
               <li><Link to="/" className="hover:text-gray-300">{t('nav.home')}</Link></li>
-              <li><Link to="fitnessproduction.gr" className="hover:text-gray-300">{t('footer.retail')}</Link></li>
+              <li>
+              <a href="https://fitnessproduction.gr" className="hover:text-gray-300" rel="noopener noreferrer" target="_blank">
+                {t('footer.retail')}
+              </a>
+              </li>
               {/* <li><Link to="/products" className="hover:text-gray-300">{t('footer.products')}</Link></li>
               <li><Link to="/about" className="hover:text-gray-300">{t('footer.about')}</Link></li>
               <li><Link to="/contact" className="hover:text-gray-300">{t('footer.contact')}</Link></li> */}

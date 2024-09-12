@@ -44,7 +44,7 @@ const drawFooter = (doc: PDFKit.PDFDocument, pageHeight: number) => {
   doc
     .fillColor('#888888')
     .fontSize(10)
-    .text('Ευχαριστούμε!', 0, footerY + 20, {
+    .text('Thank you!', 0, footerY + 20, {
       align: 'center',
       width: doc.page.width,
     });
@@ -114,8 +114,8 @@ export const generateOrderPDF = async (order: Order): Promise<Buffer> => {
         doc.text(item.product.name, 50, position);
         doc.text(item.product.sku, 200, position);
         doc.text(item.quantity.toString(), 300, position);
-        doc.text(`$${item.price.toFixed(2)}`, 380, position);
-        doc.text(`$${(item.price * item.quantity).toFixed(2)}`, 460, position);
+        doc.text(`${item.price.toFixed(2)}€`, 380, position);
+        doc.text(`${(item.price * item.quantity).toFixed(2)}€`, 460, position);
         position += 20;
 
         // Add a light gray line between items
@@ -137,7 +137,7 @@ export const generateOrderPDF = async (order: Order): Promise<Buffer> => {
       doc.fontSize(10).fillColor(textColor);
 
       doc.text(`Subtotal:`, 380, summaryStart + 20);
-      doc.text(`$${order.subtotal.toFixed(2)}`, 460, summaryStart + 20);
+      doc.text(`${order.subtotal.toFixed(2)}€`, 460, summaryStart + 20);
 
       if (order.user.discountRate > 0) {
         const discountAmount = order.subtotal * order.user.discountRate;
@@ -146,11 +146,11 @@ export const generateOrderPDF = async (order: Order): Promise<Buffer> => {
       }
 
       doc.text('Tax:', 380, summaryStart + 50);
-      doc.text(`$${order.tax.toFixed(2)}`, 460, summaryStart + 50);
+      doc.text(`${order.tax.toFixed(2)}€`, 460, summaryStart + 50);
 
       doc.font('Helvetica-Bold').fillColor(primaryColor);
       doc.text('Total:', 380, summaryStart + 65);
-      doc.text(`$${order.totalAmount.toFixed(2)}`, 460, summaryStart + 65);
+      doc.text(`${order.totalAmount.toFixed(2)}€`, 460, summaryStart + 65);
 
       drawFooter(doc, pageHeight);
 
