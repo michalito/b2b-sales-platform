@@ -3,10 +3,10 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthProvider, useAuth } from './AuthContext';
-import { ErrorProvider } from './ErrorContext';
+import { MessageProvider } from './MessageContext';
 import { CartProvider } from './CartContext';
 import ErrorBoundary from './ErrorBoundary';
-import ErrorDisplay from './ErrorDisplay';
+import ErrorDisplay from './MessageDisplay';
 import Navigation from './components/Navigation';
 import ProductList from './components/ProductList';
 import LoginForm from './components/LoginForm';
@@ -45,7 +45,7 @@ const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const App: React.FC = () => {
   return (
     <ErrorBoundary fallback={<div>Something went wrong. Please refresh the page.</div>}>
-      <ErrorProvider>
+      <MessageProvider>
         <AuthProvider>
           <CartProvider>
             <QueryClientProvider client={queryClient}>
@@ -114,7 +114,7 @@ const App: React.FC = () => {
             </QueryClientProvider>
           </CartProvider>
         </AuthProvider>
-      </ErrorProvider>
+      </MessageProvider>
     </ErrorBoundary>
   );
 };

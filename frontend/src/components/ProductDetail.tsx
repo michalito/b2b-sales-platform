@@ -3,7 +3,7 @@ import axios from 'axios';
 import config from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+import { useMessage } from '../MessageContext';
 import { Product } from '../types';
 
 const API_URL = config.API_URL;
@@ -12,7 +12,7 @@ const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { token, user } = useAuth();
-  const { setError } = useError();
+  const { setError } = useMessage();
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {

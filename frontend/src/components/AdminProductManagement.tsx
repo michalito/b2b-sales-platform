@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+import { useMessage } from '../MessageContext';
 import ProductForm from './ProductForm';
 import { deleteProduct } from '../api/productApi';
 
@@ -37,7 +37,7 @@ const AdminProductManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const { token } = useAuth();
-  const { setError } = useError();
+  const { setError, setSuccess } = useMessage();
 
   useEffect(() => {
     fetchProducts(currentPage, searchTerm);
@@ -63,7 +63,7 @@ const AdminProductManagement: React.FC = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchProducts(currentPage, searchTerm);
-      setError('Product added successfully');
+      setSuccess('Product added successfully');
       setShowAddForm(false); // Hide the form after successful addition
     } catch (error) {
       console.error('Error adding product:', error);
@@ -78,7 +78,7 @@ const AdminProductManagement: React.FC = () => {
       });
       fetchProducts(currentPage, searchTerm);
       setEditingProduct(null);
-      setError('Product updated successfully');
+      setSuccess('Product updated successfully');
     } catch (error) {
       console.error('Error updating product:', error);
       setError('Failed to update product. Please try again.');
@@ -91,7 +91,7 @@ const AdminProductManagement: React.FC = () => {
         await deleteProduct(token!, id);
         // Update the local state to remove the deleted product
         setProducts(prevProducts => prevProducts.filter(product => product.id !== id));
-        setError('Product deleted successfully');
+        setSuccess('Product deleted successfully');
       } catch (error) {
         console.error('Error deleting product:', error);
         if (axios.isAxiosError(error) && error.response) {

@@ -2,28 +2,30 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { useLocation } from 'react-router-dom';
+import { useMessage } from '../MessageContext';
 
 const API_URL = config.API_URL;
 
 const PasswordReset: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [message] = useState('');
   const location = useLocation();
+  const { setError, setSuccess } = useMessage();
 
   const token = new URLSearchParams(location.search).get('token');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
     try {
       await axios.post(`${API_URL}/auth/reset-password`, { token, newPassword: password });
-      setMessage('Password reset successful. You can now log in with your new password.');
+      setSuccess('Password reset successful. You can now log in with your new password.');
     } catch (error) {
-      setMessage('An error occurred. Please try again.');
+      setError('An error occurred. Please try again.');
     }
   };
 

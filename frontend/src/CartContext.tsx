@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useAuth } from './AuthContext';
-import { useError } from './ErrorContext';
+import { useMessage } from './MessageContext';
 import * as cartApi from './api/cartApi';
 import { CartItem as CartItemType } from './types';
 
@@ -24,9 +24,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const { token } = useAuth();
-  const { setError: setGlobalError } = useError();
+  const { setError } = useMessage();
 
   useEffect(() => {
     if (token) {
@@ -42,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCart(data); // Assuming data is the full cart object with an `items` array
     } catch (err) {
       setError('Failed to fetch cart');
-      setGlobalError('Failed to fetch cart. Please try again.');
+      // setGlobalError('Failed to fetch cart. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -56,7 +56,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await fetchCart();
     } catch (err) {
       setError('Failed to add item to cart');
-      setGlobalError('Failed to add item to cart. Please try again.');
+      // setGlobalError('Failed to add item to cart. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await fetchCart();
     } catch (err) {
       setError('Failed to remove item from cart');
-      setGlobalError('Failed to remove item from cart. Please try again.');
+      // setGlobalError('Failed to remove item from cart. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -84,7 +84,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await fetchCart();
     } catch (err) {
       setError('Failed to update cart item');
-      setGlobalError('Failed to update cart item. Please try again.');
+      // setGlobalError('Failed to update cart item. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -98,7 +98,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setCart({ id: cart?.id || 'default-cart-id', items: [] });
     } catch (err) {
       setError('Failed to clear cart');
-      setGlobalError('Failed to clear cart. Please try again.');
+      // setGlobalError('Failed to clear cart. Please try again.');
     } finally {
       setLoading(false);
     }

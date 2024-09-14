@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+import { useMessage } from '../MessageContext';
 import config from '../config';
 
 interface User {
@@ -16,7 +16,7 @@ const API_URL = config.API_URL;
 const AdminApproval: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const { token } = useAuth();
-  const { setError } = useError();
+  const { setError, setSuccess } = useMessage();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -40,7 +40,7 @@ const AdminApproval: React.FC = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(users.filter(user => user.id !== userId));
-      setError('User approved successfully');
+      setSuccess('User approved successfully');
     } catch (error) {
       console.error('Failed to approve user:', error);
       setError('Failed to approve user. Please try again.');

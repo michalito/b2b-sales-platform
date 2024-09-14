@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import axios from 'axios';
 import config from '../config';
 import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+import { useMessage } from '../MessageContext';
 import ProductTile from './ProductTile';
 import { useTranslation } from 'react-i18next';
 // import { Product as ProductType } from '../types';
@@ -68,7 +68,7 @@ const initialFilterState: FilterState = {
 
 const ProductList: React.FC = () => {
   const { token, isAuthenticated } = useAuth();
-  const { setError } = useError();
+  const { setError } = useMessage();
   const { t } = useTranslation();
   // const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>(initialFilterState);

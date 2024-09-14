@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { useAuth } from '../AuthContext';
-import { useError } from '../ErrorContext';
+import { useMessage } from '../MessageContext';
 // import { Link, useNavigate } from 'react-router-dom'; TO BE IMPLEMENTED
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useAuth();
-  const { setError } = useError();
+  const { setError } = useMessage();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {

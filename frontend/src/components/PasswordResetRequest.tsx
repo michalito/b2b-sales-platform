@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import config from '../config';
 import { useTranslation } from 'react-i18next';
+import { useMessage } from '../MessageContext';
 
 const API_URL = config.API_URL;
 
 const PasswordResetRequest: React.FC = () => {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [message] = useState('');
+  const { setError, setSuccess } = useMessage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(`${API_URL}/auth/forgot-password`, { email });
-      setMessage(t('forgotPassword.successMessage'));
+      setSuccess(t('forgotPassword.successMessage'));
     } catch (error) {
-      setMessage(t('forgotPassword.errorMessage'));
+      setError(t('forgotPassword.errorMessage'));
     }
   };
 
