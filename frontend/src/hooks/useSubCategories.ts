@@ -44,7 +44,7 @@ export const useSubCategories = () => {
     }
   };
 
-  const updateSubCategory = async (id: string, subCategory: Omit<SubCategory, 'id'>) => {
+  const updateSubCategory = async (id: string, subCategory: Omit<SubCategory, 'id' | 'category' | 'products'>) => {
     try {
       await axios.put(`${API_URL}/products/subcategories/${id}`, subCategory, {
         headers: { Authorization: `Bearer ${token}` },
