@@ -10,10 +10,12 @@
     "productList": {
       "title": "Λίστα Προϊόντων",
       "searchPlaceholder": "Αναζήτηση προϊόντων...",
+      "allBrands": "'Ολα τα brands",
       "allCategories": "Όλες οι Κατηγορίες",
       "allSubcategories": "Όλες οι Υποκατηγορίες",
       "allColors": "Όλα τα Χρώματα",
       "allSizes": "Όλα τα Μεγέθη",
+      "allDiscounts": "Όλες οι Εκπτώσεις",
       "sortBy": "Ταξινόμηση κατά",
       "nameAZ": "Όνομα (A-Z)",
       "nameZA": "Όνομα (Z-A)",
@@ -22,7 +24,8 @@
       "discountLowHigh": "Έκπτωση % (Από Χαμηλή σε Υψηλή)",
       "discountHighLow": "Έκπτωση % (Από Υψηλή σε Χαμηλή)",
       "clearFilters": "Καθαρισμός Φίλτρων",
-      "showOnlyAvailable": "Εμφάνιση μόνο Διαθέσιμων"
+      "showOnlyAvailable": "Εμφάνιση μόνο Διαθέσιμων",
+      "andAbove": "και πάνω"
     },
     "product": {
       "wholesale": "χονδρική",
@@ -53,6 +56,7 @@
       "tax": "Φόρος",
       "discountApplied": "Η έκπτωσή σας {{discountRate}}% έχει εφαρμοστεί",
       "total": "Σύνολο",
+      "discountedTotal": "Τελικό Σύνολο",
       "processing": "Επεξεργασία...",
       "confirmOrderAndDownload": "Επιβεβαίωση Παραγγελίας και Λήψη PDF",
       "orderConfirmed": "Η Παραγγελία Επιβεβαιώθηκε!",

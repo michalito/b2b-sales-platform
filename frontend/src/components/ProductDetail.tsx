@@ -66,8 +66,8 @@ const ProductDetail: React.FC = () => {
           <p><strong>Retail Price:</strong> ${product.retailPrice.toFixed(2)}</p>
           <p><strong>Wholesale Price:</strong> ${product.wholesalePrice.toFixed(2)}</p>
           <p><strong>Discount:</strong> {product.discountPercentage}%</p>
-          <p><strong>Category:</strong> {product.category}</p>
-          <p><strong>Subcategory:</strong> {product.subCategory}</p>
+          <p><strong>Category:</strong> {product.category.name}</p>
+          <p><strong>Subcategory:</strong> {product.subCategory.name}</p>
           <p><strong>Size:</strong> {product.size}</p>
           <p><strong>Stock:</strong> {product.stock}</p>
           {user?.role === 'ADMIN' && (

@@ -35,21 +35,57 @@ model User {
   discountRate      Float     @default(0)
 }
 
+model Category {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  subCategories SubCategory[]
+  products     Product[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model SubCategory {
+  id         String    @id @default(uuid())
+  name       String
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@unique([name, categoryId])
+}
+
+model Brand {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model Product {
-  id                 String     @id @default(uuid())
-  sku                String     @unique
+  id                 String      @id @default(uuid())
+  sku                String      @unique
   name               String
   color              String
   retailPrice        Float
   wholesalePrice     Float
   discountPercentage Float
-  category           String
-  subCategory        String
+  discountedPrice    Float
+  category           Category    @relation(fields: [categoryId], references: [id])
+  categoryId         String
+  subCategory        SubCategory @relation(fields: [subCategoryId], references: [id])
+  subCategoryId      String
+  brand              Brand       @relation(fields: [brandId], references: [id])
+  brandId            String
   size               String
   stock              Int
   imageUrl           String?
   cartItems          CartItem[]
   orderItems         OrderItem[]
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
 }
 
 model Cart {

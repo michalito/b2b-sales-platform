@@ -14,6 +14,8 @@ const CheckoutPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const discountedTotal = total * (1 - (user as User).discountRate);
+
   useEffect(() => {
     const fetchCartTotal = async () => {
       if (token) {
@@ -77,6 +79,10 @@ const CheckoutPage: React.FC = () => {
             })}
           </div>
           )}
+          <div className="flex justify-between items-center font-bold">
+            <span>{t('checkout.discountedTotal')}:</span>
+            <span>{discountedTotal.toFixed(2)}€</span>
+          </div>
         </div>
       </div>
       <button

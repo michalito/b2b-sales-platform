@@ -10,10 +10,12 @@
     "productList": {
       "title": "Product List",
       "searchPlaceholder": "Search products...",
+      "allBrands": "All brands",
       "allCategories": "All Categories",
       "allSubcategories": "All Subcategories",
       "allColors": "All Colors",
       "allSizes": "All Sizes",
+      "allDiscounts": "All Discounts",
       "sortBy": "Sort By",
       "nameAZ": "Name (A-Z)",
       "nameZA": "Name (Z-A)",
@@ -22,7 +24,8 @@
       "discountLowHigh": "Discount % (Low to High)",
       "discountHighLow": "Discount % (High to Low)",
       "clearFilters": "Clear Filters",
-      "showOnlyAvailable": "Show only Available"
+      "showOnlyAvailable": "Show only Available",
+      "andAbove": "and above"
     },
     "product": {
       "wholesale": "wholesale",
@@ -53,6 +56,7 @@
       "tax": "Tax",
       "discountApplied": "Your discount of {{discountRate}}% has been applied",
       "total": "Total",
+      "discountedTotal": "Discounted Total",
       "processing": "Processing...",
       "confirmOrderAndDownload": "Confirm Order and Download PDF",
       "orderConfirmed": "Order Confirmed!",

@@ -9,7 +9,7 @@ async function updateAdminPassword() {
 
   try {
     const updatedUser = await prisma.user.update({
-      where: { email: 'michael.sinoplis@fitnessproduction.gr' },
+      where: { email: '' }, // Change this to your desired user email
       data: { 
         password: hashedPassword,
         approved: true, // Ensure the user is approved

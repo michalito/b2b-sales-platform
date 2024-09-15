@@ -39,3 +39,10 @@ export const deleteProduct = async (token: string, id: string) => {
   });
   return response.data;
 };
+
+export const getFilterOptions = async (token: string) => {
+  const response = await axios.get(`${API_URL}/products/filter-options`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  return response.data;
+};
