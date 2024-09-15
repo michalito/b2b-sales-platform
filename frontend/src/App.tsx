@@ -50,10 +50,11 @@ const App: React.FC = () => {
           <CartProvider>
             <QueryClientProvider client={queryClient}>
               <Router>
+              <div className="flex flex-col min-h-screen">
                 <ErrorDisplay />
                 <Navigation />
-                <div className="container mx-auto mt-8">
-                  <Routes>
+                <div className="flex-grow container mx-auto mt-8 px-4">
+                <Routes>
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/forgot-password" element={<PasswordResetRequest />} />
@@ -110,6 +111,7 @@ const App: React.FC = () => {
                   </Routes>
                 </div>
                 <Footer />
+              </div>
               </Router>
             </QueryClientProvider>
           </CartProvider>
