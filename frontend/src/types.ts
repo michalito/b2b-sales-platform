@@ -2,10 +2,11 @@ export interface User {
   id: string;
   email: string;
   role: string;
+  password?: string;
   approved: boolean;
   emailVerified: boolean;
   cart?: Cart;
-  orders: Order[];
+  orders?: Order[];
   name?: string;
   company?: string;
   vatNumber?: string;

@@ -15,7 +15,7 @@ import PasswordResetRequest from './components/PasswordResetRequest';
 import PasswordReset from './components/PasswordReset';
 import EmailVerification from './components/EmailVerification';
 import AdminApproval from './components/AdminApproval';
-import AdminProductManagement from './components/AdminProductManagement';
+import AdminProductManagement from './components/AdminManagement';
 import CartView from './components/CartView';
 import CheckoutPage from './components/CheckoutPage';
 import OrderConfirmation from './components/OrderConfirmation';

@@ -185,3 +185,32 @@ router.post('/approve/:userId', authenticate, authorize(['ADMIN']), async (req, 
 });
   
   export default router;
+
+  // Authorised route to create a password
+  router.post('/set-password', async (req, res) => {
+    try {
+      const { token, password } = req.body;
+      const user = await prisma.user.findFirst({
+        where: { verificationToken: token },
+      });
+  
+      if (!user) {
+        return res.status(400).json({ error: 'Invalid token' });
+      }
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          password: hashedPassword,
+          emailVerified: true,
+          verificationToken: null,
+        },
+      });
+  
+      res.json({ message: 'Password set successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+  });

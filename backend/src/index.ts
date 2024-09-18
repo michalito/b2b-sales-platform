@@ -6,7 +6,8 @@ import authRoutes from './routes/authRoutes';
 import cartRoutes from './routes/cartRoutes';
 import { errorHandler } from './utils/errorHandler';
 import orderRoutes from './routes/orderRoutes';
-import testPdfRoute from './routes/pdfTestRoute'
+import testPdfRoute from './routes/pdfTestRoute';
+import userRoutes from './routes/userRoutes';
  
 const app = express();
 
@@ -19,13 +20,14 @@ app.use(express.json());
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend is reachable' });
 });
-app.use('/api/test', testPdfRoute); // Add this line
+app.use('/api/test', testPdfRoute);
 
 app.use('/health', healthRouter);
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/users', userRoutes);
 
 
 

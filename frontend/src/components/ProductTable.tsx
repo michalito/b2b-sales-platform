@@ -51,8 +51,8 @@ export const ProductTable: React.FC<ProductTableProps> = ({
               <TableCell>{product.brand.name}</TableCell>
               <TableCell>{product.color}</TableCell>
               <TableCell>{product.size}</TableCell>
-              <TableCell>${product.retailPrice.toFixed(2)}</TableCell>
-              <TableCell>${product.wholesalePrice.toFixed(2)}</TableCell>
+              <TableCell>{product.retailPrice.toFixed(2)}€</TableCell>
+              <TableCell>{product.wholesalePrice.toFixed(2)}€</TableCell>
               <TableCell>{product.discountPercentage}%</TableCell>
               <TableCell>{product.stock}</TableCell>
               <TableCell>

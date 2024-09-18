@@ -47,7 +47,7 @@ const Navigation: React.FC = () => {
                     <Link to="/admin/approvals" className="hover:text-gray-300">Approvals</Link>
                   </li>
                   <li>
-                    <Link to="/admin/products" className="hover:text-gray-300">Manage Products</Link>
+                    <Link to="/admin/products" className="hover:text-gray-300">Admin</Link>
                   </li>
                 </>
               )}
